@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", "sans-serif";
+    box-sizing: border-box;
+}
+.container {
+    border: 3px solid black;
+    width: 100%;
+    min-height: 100vh;
+    background: #0b0423;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: row;
+}
+#tools {
+    background-color: white;
+    height: 100%;
+    min-height: 100vh;
+    flex: 1;
+}
+#playground {
+    flex: 3;
+    min-height: 100vh;
+    height: 100%;
+}
+#tools form {
+    border: 1px solid black;
+    padding: 3px;
+    margin: 3px;
+}
+.element {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}

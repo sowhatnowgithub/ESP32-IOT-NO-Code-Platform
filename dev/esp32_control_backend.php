@@ -26,7 +26,7 @@ if (isset($_POST["CONNECTION_STATUS"])) {
     // this guy will make all the connection variables to null, meaning the connectin died and all set variables are gone
     // this will be build when sql is done
 }
-if (isset($_POST["gpio-digital-out"])) {
+if (isset($_POST["gpio-digital-out"]) && isset($_POST["gpio-digital-status"])) {
     $c_url =
         $url .
         "/digital/OUT/gpio_pin=" .
@@ -38,8 +38,53 @@ if (isset($_POST["gpio-digital-out"])) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
 
     $response = curl_exec($ch);
+}
+if (
+    isset($_POST["gpio-digital-in"]) &&
+    strcmp($_POST["gpio-digital-in"], "null") != 0 &&
+    isset($_POST["gpio-digital-in-status"])
+) {
+    $c_url =
+        $url .
+        "/digital/IN/gpio_pin=" .
+        $_POST["gpio-digital-in"] .
+        "/status=" .
+        $_POST["gpio-digital-in-status"] .
+        "/end";
+    $ch = curl_init($c_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+
+    $response = curl_exec($ch);
+
     echo $response;
-} else {
+}
+if (isset($_POST["dac-write-pin"]) && isset($_POST["dac-write-value"])) {
+    $c_url =
+        $url .
+        "/digital/dac/gpio_pin=" .
+        $_POST["dac-write-pin"] .
+        "/status=" .
+        $_POST["dac-write-value"] .
+        "/end";
+    $ch = curl_init($c_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    $response = curl_exec($ch);
 }
 
+if (isset($_POST["dac-disable-pin"]) && isset($_POST["dac-disable-valid"])) {
+    $c_url =
+        $url .
+        "/digital/disable-dac/gpio_pin=" .
+        $_POST["dac-disable-pin"] .
+        "/end";
+    $ch = curl_init($c_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    $response = curl_exec($ch);
+}
+if (isset($_POST["delay-seconds"])) {
+    $c_url = $url . "/delay/delay=" . $_POST["delay-seconds"] . "/end";
+    $ch = curl_init($c_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    $response = curl_exec($ch);
+}
 include "esp32_user_control.html";
