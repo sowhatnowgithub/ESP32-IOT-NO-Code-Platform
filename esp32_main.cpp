@@ -1,5 +1,4 @@
 #include<WiFi.h>
-#include<string.h>
 IPAddress ip;
 String str1;
 String str2;
@@ -63,7 +62,7 @@ void loop() {
              while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < 10000) {
               delay(500);
               Serial.print('.');
-             } 
+             }
              if(WiFi.status() == WL_CONNECTED){
               ip = WiFi.localIP();
               client.println("Now you can connect to your ssid and use the esp32, Connect to the following IP <br>");
@@ -81,7 +80,7 @@ void loop() {
               unsigned short int pos_end = header.indexOf("/status=");
               String gpio_pin = header.substring(pos_start+10,pos_end);
               pos_start = header.indexOf("/end");
-              String gpio_pin_status = header.substring(pos_end+8, pos_start); 
+              String gpio_pin_status = header.substring(pos_end+8, pos_start);
               int pin =  gpio_pin.toInt();
               int pin_status = gpio_pin_status.toInt();
               pinMode(pin,OUTPUT);
@@ -92,7 +91,7 @@ void loop() {
               unsigned short int pos_end = header.indexOf("/status=");
               String gpio_pin = header.substring(pos_start+10,pos_end);
               pos_start = header.indexOf("/end");
-              String gpio_pin_status = header.substring(pos_end+8, pos_start); 
+              String gpio_pin_status = header.substring(pos_end+8, pos_start);
               int pin =  gpio_pin.toInt();
               if(gpio_pin_status == "INPUT_PULLUP"){
                 pinMode(pin,INPUT_PULLUP);
@@ -114,7 +113,7 @@ void loop() {
               unsigned short int pos_end = header.indexOf("/status=");
               String gpio_pin = header.substring(pos_start+10,pos_end);
               pos_start = header.indexOf("/end");
-              String gpio_pin_status = header.substring(pos_end+8, pos_start); 
+              String gpio_pin_status = header.substring(pos_end+8, pos_start);
               int pin =  gpio_pin.toInt();
               int pin_status = gpio_pin_status.toInt();
               dacWrite(pin, pin_status);
