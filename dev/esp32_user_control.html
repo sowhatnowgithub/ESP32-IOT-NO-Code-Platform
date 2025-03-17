@@ -33,7 +33,7 @@
                 <br />
                 <label for="gpio-digital-in">GPIO - Digital input: </label>
                 <select name="gpio-digital-in">
-                    <option value="null">Null</option>
+                    <option value="Null">Null</option>
                     <option value="23">23</option>
                     <option value="22">22</option>
                     <option value="21">21</option>
@@ -69,6 +69,33 @@
                 <br />
                 <label for="delay-seconds">Delay (in milli seconds)</label>
                 <input type="number" name="delay-seconds" min="0" />
+                <br />
+                <label for="analog-write-pin">PWM - PIN</label>
+                <select name="analog-write-pin">
+                    <option value="Null">Null</option>
+                    <option value="23">23</option>
+                    <option value="22">22</option>
+                    <option value="21">21</option>
+                    <option value="19">19</option>
+                    <option value="18">18</option>
+                    <option value="5">5</option></select
+                ><br />
+                <label for="analog-write-freq">PWM - Freq(in Hz)</label>
+                <input type="number" min="0" name="analog-write-freq" /><br />
+                <label for="analog-write-res">PWM - Resolution(1- 20)</label>
+                <input
+                    type="number"
+                    min="1"
+                    max="20"
+                    name="analog-write-res"
+                /><br />
+                <label for="analog-write-duty">PWM - duty</label>
+                <input
+                    type="number"
+                    min="1"
+                    max="255"
+                    name="analog-write-duty"
+                />
                 <br />
                 <input
                     type="checkbox"

@@ -132,6 +132,29 @@ void loop() {
               int delay_value =  gpio_pin.toInt();
               delay(delay_value);
             }
+            else if(header.indexOf("GET /analog/write/") >= 0){
+              unsigned short int pos_start = header.indexOf("/gpio_pin="); // 13
+              unsigned short int pos_end = header.indexOf("/freq=");
+              String gpio_pin = header.substring(pos_start+10,pos_end);
+              pos_start = header.indexOf("/res=");
+              String attach_freq = header.substring(pos_end+6, pos_start);
+              pos_end = header.indexOf("/duty=");
+              String write_res = header.substring(pos_start+5, pos_end);
+              pos_start = header.indexOf("/end");
+              String write_duty = header.substring(pos_end+6,pos_start);
+              int duty = write_duty.toInt();
+              int res = write_res.toInt();
+              int pin =  gpio_pin.toInt();
+              int  freq = attach_freq.toInt();
+              analogWrite(pin, duty);
+              analogWriteResolution(res);
+              analogWriteFrequency(freq);
+              Serial.print("GPIO Pin: "); Serial.println(pin);
+              Serial.print("Frequency: "); Serial.println(freq);
+              Serial.print("Resolution: "); Serial.println(res);
+              Serial.print("Duty Cycle: "); Serial.println(duty);
+            }
+
             client.println();
             break;
           }

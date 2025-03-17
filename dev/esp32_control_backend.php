@@ -41,7 +41,7 @@ if (isset($_POST["gpio-digital-out"]) && isset($_POST["gpio-digital-status"])) {
 }
 if (
     isset($_POST["gpio-digital-in"]) &&
-    strcmp($_POST["gpio-digital-in"], "null") != 0 &&
+    strcmp($_POST["gpio-digital-in"], "Null") != 0 &&
     isset($_POST["gpio-digital-in-status"])
 ) {
     $c_url =
@@ -87,4 +87,28 @@ if (isset($_POST["delay-seconds"])) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
     $response = curl_exec($ch);
 }
+if (
+    isset($_POST["analog-write-pin"]) &&
+    isset($_POST["analog-write-freq"]) &&
+    isset($_POST["analog-write-res"]) &&
+    isset($_POST["analog-write-duty"]) &&
+    strcmp($_POST["analog-write-pin"], "null") != 0
+) {
+    $c_url =
+        $url .
+        "/analog/write/gpio_pin=" .
+        $_POST["analog-write-pin"] .
+        "/freq=" .
+        $_POST["analog-write-freq"] .
+        "/res=" .
+        $_POST["analog-write-res"] .
+        "/duty=" .
+        $_POST["analog-write-duty"] .
+        "/end";
+    $ch = curl_init($c_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+
+    $response = curl_exec($ch);
+}
+
 include "esp32_user_control.html";
