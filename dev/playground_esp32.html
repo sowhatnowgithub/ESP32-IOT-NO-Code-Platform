@@ -2,8 +2,10 @@
 <html>
     <head>
         <title>Drag and Drop</title>
-        <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="playground.css" />
+        <link rel="stylesheet" href="normalize.css" />
         <meta http-equiv="author" content="sai" />
+        <script src="playground.js" defer></script>
     </head>
     <body>
         <div class="container">
@@ -30,18 +32,18 @@
                             <option value="18">18</option>
                             <option value="5">5</option>
                         </select>
+                        <label for="gpio-digiral-status">HIGH</label>
                         <input
                             type="radio"
                             name="gpio-digital-status"
                             value="1"
                         />
-                        HIGH
+                        <label for="gpio-digiral-status">LOW</label>
                         <input
                             type="radio"
                             name="gpio-digital-status"
                             value="0"
                         />
-                        LOW
                         <br />
                     </form>
                 </div>
@@ -112,56 +114,9 @@
                 </div>
             </div>
             <div id="playground">
-                <button id="submit-playground">Submit-Playground</button>
+                <h1 class="heading">PlayGround</h1>
+                <button class="btn submit-playground">Submit-Playground</button>
             </div>
         </div>
-
-        <script>
-            let elements = document.getElementsByClassName("element");
-            let tools = document.getElementById("tools");
-            let playground = document.getElementById("playground");
-            let draggedForms = [];
-            for (element of elements) {
-                element.addEventListener("dragstart", function (e) {
-                    let selected = e.target;
-                    selected = selected.cloneNode(true);
-                    selected.style.position = "absolute";
-                    playground.addEventListener("dragover", function (e) {
-                        e.preventDefault();
-                    });
-                    playground.addEventListener("drop", function (e) {
-                        playground.appendChild(selected);
-                        selected.style.position = "relative";
-                        let form = selected.querySelector("form");
-                        if (form) {
-                            draggedForms.push(form);
-                        }
-                    });
-                });
-            }
-            document
-                .getElementById("submit-playground")
-                .addEventListener("click", function (e) {
-                    if (draggedForms.length === 0) {
-                        alert("add atleast one element from the tool box,");
-                        return;
-                    }
-                    function submitFormsSequentially(index) {
-                        if (index < draggedForms.length) {
-                            let form = draggedForms[index];
-                            let responses = [];
-                            let formData = new FormData(form);
-
-                            fetch(form.action, {
-                                method: "POST",
-                                body: formData,
-                            });
-
-                            submitFormsSequentially(index + 1);
-                        }
-                    }
-                    submitFormsSequentially(0);
-                });
-        </script>
     </body>
 </html>
