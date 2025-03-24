@@ -2,7 +2,7 @@
 
 $url = "http://192.168.4.1";
 if (file_exists("../file_esp32_ip.txt")) {
-    $u = file("file_esp32_ip.txt");
+    $u = file("../file_esp32_ip.txt");
     $url = str_replace("\r\n", "\n", $u[0]);
     $url = trim($url);
     $url = "http://" . $url;
