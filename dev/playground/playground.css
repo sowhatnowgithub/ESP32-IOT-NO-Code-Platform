@@ -178,6 +178,7 @@ textarea {
 }
 
 .container {
+    height: 100vh;
     display: flex;
     flex-grow: row;
     margin: 10px;
@@ -186,6 +187,9 @@ textarea {
     flex: 1;
     border: 3px solid black;
     padding: 6px;
+    min-width: 280px;
+    overflow-x: scroll;
+    overflow-y: scroll;
 }
 #playground {
     flex: 3;

@@ -11,7 +11,9 @@ if ($data === null) {
 
 $file_name = $data[count($data) - 1]["file_name"];
 $file_name = preg_replace("/[^a-zA-Z0-9-_\.]/", "", $file_name);
-echo var_dump($data);
+
+$file_name = "playgroundSavedFiles/$file_name";
+fopen($file_name, "w");
 if (file_put_contents($file_name, json_encode($data))) {
     echo json_encode([
         "success" => true,

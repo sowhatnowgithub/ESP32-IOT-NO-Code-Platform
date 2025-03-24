@@ -122,7 +122,11 @@ save_playground.addEventListener("click", async function (e) {
     });
     jsonDataForm.push(obj);
   }
-
+  while (file_name === "") {
+    file_name = prompt(
+      "Please enter a valid number the name of the playground:",
+    );
+  }
   let file_name_ext = { file_name: file_name + ".json" };
   jsonDataForm.push(file_name_ext);
   let finalJsonData = JSON.stringify(jsonDataForm);
@@ -134,7 +138,6 @@ save_playground.addEventListener("click", async function (e) {
       body: finalJsonData,
     });
     let data = await response.json();
-    alert(data.message);
     if (data.success) {
       alert("Yep successfully Saved the thing");
     } else {
@@ -143,4 +146,8 @@ save_playground.addEventListener("click", async function (e) {
   } catch (error) {
     console.error("Error:", error);
   }
+});
+load_playground.addEventListener("click", function (e) {
+  e.preventDefault();
+  let response = read;
 });

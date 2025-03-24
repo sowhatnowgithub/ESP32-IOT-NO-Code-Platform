@@ -1,7 +1,7 @@
 <?php
 
 $url = "http://192.168.4.1";
-if (file_exists("file_esp32_ip.txt")) {
+if (file_exists("../file_esp32_ip.txt")) {
     $u = file("file_esp32_ip.txt");
     $url = str_replace("\r\n", "\n", $u[0]);
     $url = trim($url);
@@ -11,7 +11,7 @@ if (file_exists("file_esp32_ip.txt")) {
 $ch_verify = curl_init($url);
 curl_setopt($ch_verify, CURLOPT_RETURNTRANSFER, true);
 if (curl_exec($ch_verify) == false) {
-    $f = fopen("file_esp32_ip.txt", "w");
+    $f = fopen("../file_esp32_ip.txt", "w");
     fwrite($f, "192.168.4.1");
     fclose($f);
     curl_close($ch_verify);
