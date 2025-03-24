@@ -49,8 +49,8 @@ html {
     --bodyFont: "Josefin Sans", sans-serif;
     --smallText: 0.7em; /* this is to say i will style relative to parent propert*/
     /* rest of the variables */
-    --backgroundColor: #fec7d7;
-    --textColor: #0e172c;
+    --backgroundColor: #efdfbb;
+    --textColor: #722f37;
     --tertiary: #a786df;
     --borderRadius: 0.25rem;
     --letterSpacing: 1px;
@@ -197,4 +197,17 @@ textarea {
 .element {
     margin: 10px;
 }
+.playground-mini {
+    background: var(--white);
+    width: 100%;
+    height: auto;
+    min-height: 50px;
+    border: 2px solid black;
+    border-radius: var(--borderRadius);
+    background-color: var(--backgroundColor);
+}
+.element .function {
+    background: var(--white);
+    padding: 10px;
+    border-radius: var(--borderRadius);
 }

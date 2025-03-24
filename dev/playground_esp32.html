@@ -19,6 +19,12 @@
                         >Go Back to User Control</a
                     >
                 </button>
+                <button class="save_playground">
+                    <a>Save Playground</a>
+                </button>
+                <button class="load_playground">
+                    <a>Load Playground</a>
+                </button>
                 <div class="element" draggable="true">
                     <form action="esp32_control_backend.php" method="post">
                         <label for="gpio-digital-out"
@@ -85,7 +91,75 @@
                     </form>
                 </div>
                 <div class="element" draggable="true">
-                    <form action="esp32_control_backend.php">
+                    <form action="esp32_control_backend.php" method="post">
+                        <label for="gpio-digital-out"
+                            >Internal Led Control
+                        </label>
+
+                        <select name="gpio-digital-out">
+                            <option value="2">2</option>
+                        </select>
+                        <label for="gpio-digiral-status">HIGH</label>
+                        <input
+                            type="radio"
+                            name="gpio-digital-status"
+                            value="1"
+                        />
+                        <label for="gpio-digiral-status">LOW</label>
+                        <input
+                            type="radio"
+                            name="gpio-digital-status"
+                            value="0"
+                        />
+                        <br />
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form action="esp32_control_backend.php" method="post">
+                        <label for="analog-write-pin"
+                            >PWM -Internal - PIN</label
+                        >
+                        <select name="analog-write-pin">
+                            <option value="Null">Null</option>
+                            <option value="2">2</option></select
+                        ><br />
+                        <label for="analog-write-freq">PWM - Freq(in Hz)</label>
+                        <input type="number" min="0" name="analog-write-freq" />
+                        <label for="analog-write-res"
+                            >PWM - Resolution(1- 20)</label
+                        >
+                        <input
+                            type="number"
+                            min="1"
+                            max="20"
+                            name="analog-write-res"
+                        /><br />
+                        <label for="analog-write-duty">PWM - duty</label>
+                        <input
+                            type="number"
+                            min="1"
+                            max="255"
+                            name="analog-write-duty"
+                        />
+                        <br />
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form class="function for-loop">
+                        <label for="for-loop">For Loop</label>
+                        <input type="number" name="for-loop" min="1" />
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form class="function end">
+                        <label for="end">End</label>
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form
+                        action="playground_control_backend_read.php"
+                        class="read_from_esp32"
+                    >
                         <label for="gpio-digital-in"
                             >GPIO - Digital input:
                         </label>
