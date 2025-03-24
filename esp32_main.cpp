@@ -138,7 +138,7 @@ void loop() {
               String gpio_pin = header.substring(pos_start+10,pos_end);
               pos_start = header.indexOf("/res=");
               String attach_freq = header.substring(pos_end+6, pos_start);
-              pos_end = header.indexOf("/duty=");
+              pos_end = header.indexOf("/duty="); 
               String write_res = header.substring(pos_start+5, pos_end);
               pos_start = header.indexOf("/end");
               String write_duty = header.substring(pos_end+6,pos_start);
@@ -154,7 +154,7 @@ void loop() {
               Serial.print("Resolution: "); Serial.println(res);
               Serial.print("Duty Cycle: "); Serial.println(duty);
             }
-
+   
             client.println();
             break;
           }
