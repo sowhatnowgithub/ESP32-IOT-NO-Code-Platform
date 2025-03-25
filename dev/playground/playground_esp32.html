@@ -134,27 +134,15 @@
                             <option value="5">5</option></select
                         ><br />
                         <label for="analog-write-freq">PWM - Freq(in Hz)</label>
-                        <input
-                            type="number"
-                            min="0"
-                            name="analog-write-freq"
-                        /><br />
+                        <input type="text" name="analog-write-freq" /><br />
                         <label for="analog-write-res"
-                            >PWM - Resolution(1- 20)</label
+                            >PWM - Resolution(1- 20)
+                        </label>
+                        <input type="text" name="analog-write-res" /><br />
+                        <label for="analog-write-duty"
+                            >PWM - duty - (0 - 255)</label
                         >
-                        <input
-                            type="number"
-                            min="1"
-                            max="20"
-                            name="analog-write-res"
-                        /><br />
-                        <label for="analog-write-duty">PWM - duty</label>
-                        <input
-                            type="number"
-                            min="1"
-                            max="255"
-                            name="analog-write-duty"
-                        />
+                        <input type="text" name="analog-write-duty" />
                         <br />
                     </form>
                 </div>
@@ -192,23 +180,13 @@
                             <option value="2">2</option></select
                         ><br />
                         <label for="analog-write-freq">PWM - Freq(in Hz)</label>
-                        <input type="number" min="0" name="analog-write-freq" />
+                        <input type="text" name="analog-write-freq" />
                         <label for="analog-write-res"
                             >PWM - Resolution(1- 20)</label
                         >
-                        <input
-                            type="number"
-                            min="1"
-                            max="20"
-                            name="analog-write-res"
-                        /><br />
+                        <input type="text" name="analog-write-res" /><br />
                         <label for="analog-write-duty">PWM - duty</label>
-                        <input
-                            type="number"
-                            min="1"
-                            max="255"
-                            name="analog-write-duty"
-                        />
+                        <input type="text" name="analog-write-duty" />
                         <br />
                     </form>
                 </div>
@@ -246,18 +224,14 @@
                 <div class="element" draggable="true">
                     <form action="../esp32_control_backend.php" method="post">
                         <label for="dac-write-pin"
-                            >DAC Write(0-255 -> 0V-3.3V)</label
+                            >DAC Write(0-255 -> 0V-3.3V)(input range 0 -
+                            255)</label
                         >
                         <select name="dac-write-pin">
                             <option value="25">25</option>
                             <option value="26">26</option>
                         </select>
-                        <input
-                            type="number"
-                            name="dac-write-value"
-                            max="255"
-                            min="0"
-                        />
+                        <input type="text" name="dac-write-value" />
                         <br />
                     </form>
                 </div>
@@ -281,7 +255,7 @@
                         <label for="delay-seconds"
                             >Delay (in milli seconds)</label
                         >
-                        <input type="number" name="delay-seconds" min="0" />
+                        <input type="text" name="delay-seconds" />
                         <br />
                     </form>
                 </div>

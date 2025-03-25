@@ -56,6 +56,19 @@ tools.addEventListener("drop", function (e) {
     }
   }
 });
+function replaceVariableWithValue(formData) {
+  let updatedFormData = new FormData();
+
+  for (let [key, value] of formData.entries()) {
+    if (variableNames.hasOwnProperty(value.trim())) {
+      updatedFormData.append(key, variableNames[value.trim()]); // Replace with variable value
+    } else {
+      updatedFormData.append(key, value); // Keep original if no match
+    }
+  }
+
+  return updatedFormData;
+}
 document
   .querySelector(".submit-playground")
   .addEventListener("click", async function (e) {
@@ -75,53 +88,6 @@ document
         variableNames[variableName] = variableValue; // Only store if the name is not empty
       }
     }
-    let variablesArithmatic = document.querySelectorAll(".arithmatic");
-
-    for (let variableArithmatic of variablesArithmatic) {
-      if (variableArithmatic) {
-        let variable_zero = variableArithmatic
-          .querySelector('input[name="variable_zero"]')
-          .value.trim();
-        let variable_one = variableArithmatic
-          .querySelector('input[name="variable_one"]')
-          .value.trim();
-        let variable_two = variableArithmatic
-          .querySelector('input[name="variable_two"]')
-          .value.trim();
-        let operation = variableArithmatic.querySelector(
-          'select[name="operation"]',
-        ).value;
-        let value_one = parseFloat(variableNames[variable_one] || 0); // ✅ Convert undefined to 0
-        let value_two = parseFloat(variableNames[variable_two] || 0); // ✅ Convert undefined to 0
-
-        if (!isNaN(value_one) && !isNaN(value_two)) {
-          switch (operation) {
-            case "add":
-              variableNames[variable_zero] = value_one + value_two;
-              break;
-            case "sub":
-              variableNames[variable_zero] = value_one - value_two;
-              break;
-            case "mul":
-              variableNames[variable_zero] = value_one * value_two;
-              break;
-            case "div":
-              variableNames[variable_zero] =
-                value_two !== 0
-                  ? value_one / value_two
-                  : "Error: Division by zero";
-              break;
-            case "mod":
-              variableNames[variable_zero] =
-                value_two !== 0
-                  ? value_one % value_two
-                  : "Error: Modulo by zero";
-              break;
-          }
-        }
-      }
-    }
-
     let droppedForms = document.querySelectorAll(".playground_element form");
     async function submitFormForLoop(index, loop) {
       for (let i = 0; i < loop; i++) {
@@ -129,9 +95,57 @@ document
       }
       return await submitForm(index);
     }
+
     async function submitForm(index) {
       if (index < droppedForms.length) {
         let form = droppedForms[index];
+        let variablesArithmatic = document.querySelectorAll(".arithmatic");
+
+        for (let variableArithmatic of variablesArithmatic) {
+          if (variableArithmatic) {
+            let variable_zero = variableArithmatic
+              .querySelector('input[name="variable_zero"]')
+              .value.trim();
+            let variable_one = variableArithmatic
+              .querySelector('input[name="variable_one"]')
+              .value.trim();
+            let variable_two = variableArithmatic
+              .querySelector('input[name="variable_two"]')
+              .value.trim();
+            let operation = variableArithmatic.querySelector(
+              'select[name="operation"]',
+            ).value;
+            let value_one = parseFloat(variableNames[variable_one] || 0); // ✅ Convert undefined to 0
+            let value_two = parseFloat(variableNames[variable_two] || 0); // ✅ Convert undefined to 0
+
+            if (!isNaN(value_one) && !isNaN(value_two)) {
+              switch (operation) {
+                case "add":
+                  variableNames[variable_zero] = value_one + value_two;
+                  break;
+                case "sub":
+                  variableNames[variable_zero] = value_one - value_two;
+                  break;
+                case "mul":
+                  variableNames[variable_zero] = value_one * value_two;
+                  break;
+                case "div":
+                  variableNames[variable_zero] =
+                    value_two !== 0
+                      ? value_one / value_two
+                      : "Error: Division by zero";
+                  break;
+                case "mod":
+                  variableNames[variable_zero] =
+                    value_two !== 0
+                      ? value_one % value_two
+                      : "Error: Modulo by zero";
+                  break;
+              }
+            }
+          }
+        }
+
         if (form.classList.contains("for-loop")) {
           let loopCount =
             parseInt(form.querySelector("input[name='for-loop']").value, 10) ||
@@ -188,6 +202,7 @@ document
           }
         } else {
           let formData = new FormData(form);
+          formData = replaceVariableWithValue(formData);
           return await fetch(form.action, {
             method: "POST",
             body: formData,
