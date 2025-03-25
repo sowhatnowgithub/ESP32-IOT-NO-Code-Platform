@@ -2,6 +2,8 @@ let elements = document.getElementsByClassName("element");
 let tools = document.getElementById("tools");
 let playground = document.getElementById("playground");
 let response_esp32 = [];
+let variableNames = {};
+
 playground.addEventListener("dragover", function (e) {
   e.preventDefault();
 });
@@ -58,6 +60,69 @@ document
   .querySelector(".submit-playground")
   .addEventListener("click", async function (e) {
     e.preventDefault();
+    let variables = document.querySelectorAll(".variable"); // Select all forms with class "variable"
+
+    for (let variable of variables) {
+      let variableName = variable
+        .querySelector("input[name='variable_declaration']")
+        .value.trim(); // Get and trim variable name
+      let variableValue =
+        parseInt(
+          variable.querySelector("input[name='variable_value']").value,
+          10,
+        ) || 0; // Convert to integer
+
+      if (variableName) {
+        variableNames[variableName] = variableValue; // Only store if the name is not empty
+      }
+    }
+    let variablesArithmatic = document.querySelectorAll(".arithmatic");
+
+    for (let variableArithmatic of variablesArithmatic) {
+      if (variableArithmatic) {
+        let variable_zero = variableArithmatic
+          .querySelector('input[name="variable_zero"]')
+          .value.trim();
+        let variable_one = variableArithmatic
+          .querySelector('input[name="variable_one"]')
+          .value.trim();
+        let variable_two = variableArithmatic
+          .querySelector('input[name="variable_two"]')
+          .value.trim();
+        let operation = variableArithmatic.querySelector(
+          'select[name="operation"]',
+        ).value;
+        let value_one = parseFloat(variableNames[variable_one] || 0); // ✅ Convert undefined to 0
+        let value_two = parseFloat(variableNames[variable_two] || 0); // ✅ Convert undefined to 0
+
+        if (!isNaN(value_one) && !isNaN(value_two)) {
+          switch (operation) {
+            case "add":
+              variableNames[variable_zero] = value_one + value_two;
+              break;
+            case "sub":
+              variableNames[variable_zero] = value_one - value_two;
+              break;
+            case "mul":
+              variableNames[variable_zero] = value_one * value_two;
+              break;
+            case "div":
+              variableNames[variable_zero] =
+                value_two !== 0
+                  ? value_one / value_two
+                  : "Error: Division by zero";
+              break;
+            case "mod":
+              variableNames[variable_zero] =
+                value_two !== 0
+                  ? value_one % value_two
+                  : "Error: Modulo by zero";
+              break;
+          }
+        }
+      }
+    }
+
     let droppedForms = document.querySelectorAll(".playground_element form");
 
     async function submitFormForLoop(index, loop) {
@@ -86,7 +151,10 @@ document
             .then(async (text) => {
               if (text && form.classList.contains("read_from_esp32")) {
                 response_esp32.push(text);
-                alert(text);
+                let variableNameRead = form.querySelector(
+                  'input[name="variable_declare_input"]',
+                ).value;
+                variableNames[variableNameRead] = parseInt(text);
               }
               return await submitForm(index + 1);
             })
@@ -105,6 +173,31 @@ if (responseMessage) {
   alert(responseMessage);
 }
 
+document.addEventListener("DOMContentLoaded", function (e) {
+  let sidebar = document.createElement("div");
+  sidebar.id = "variable-sidebar";
+  sidebar.style.position = "fixed";
+  sidebar.style.top = "0";
+  sidebar.style.right = "0";
+  sidebar.style.width = "140px";
+  sidebar.style.height = "100vh";
+  sidebar.style.backgroundColor = "#f4f4f4";
+  sidebar.style.padding = "10px";
+  sidebar.style.overflowY = "auto";
+  sidebar.style.borderLeft = "2px solid #ccc";
+  document.body.appendChild(sidebar);
+  function updateSidebar() {
+    sidebar.innerHTML = "<h3>Variable</h3>";
+    for (let key in variableNames) {
+      let value = variableNames[key];
+      let box_item = document.createElement("div");
+      box_item.id = "box_variables";
+      box_item.innerHTML = `<p>${key} :-> ${value}</p>`;
+      sidebar.appendChild(box_item);
+    }
+  }
+  setInterval(updateSidebar, 1000);
+});
 let save_playground = document.querySelector(".save_playground");
 let load_playground = document.querySelector(".load_playground");
 let file_name;
@@ -147,7 +240,36 @@ save_playground.addEventListener("click", async function (e) {
     console.error("Error:", error);
   }
 });
+async function validFilePath() {
+  let directoryContents = {};
+  let res = await fetch("fileList.php");
+  let contents = await res.json();
+  alert("Available files:\n" + contents.files.join("\n"));
+  let fileName = prompt("Enter the file Name(don't include any extensioins)");
+  fileName += ".json";
+  fileName = "playgroundSavedFiles/" + fileName;
+  try {
+    const response = await fetch(fileName);
+    if (response.ok) {
+      console.log("File found");
+      return fileName;
+    } else {
+      alert("file not found");
+    }
+  } catch (err) {
+    alert("Error fetching file");
+  }
+}
 load_playground.addEventListener("click", function (e) {
   e.preventDefault();
-  let response = read;
+  let playgroundDetails = {};
+  validFilePath().then((validFile) => {
+    console.log("valid File found");
+    fetch(validFile)
+      .then((response) => response.json())
+      .then((data) => {
+        playgroundDetails = data;
+      })
+      .catch((error) => console.error("error :", error));
+  });
 });
