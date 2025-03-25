@@ -8,8 +8,14 @@ if (file_exists("file_esp32_ip.txt")) {
     $url = "http://" . $url;
 }
 
+// Increase the PHP execution time limit
+set_time_limit(120); // Set to 120 seconds
+
 $ch_verify = curl_init($url);
 curl_setopt($ch_verify, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch_verify, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+curl_setopt($ch_verify, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
+
 if (curl_exec($ch_verify) == false) {
     $f = fopen("file_esp32_ip.txt", "w");
     fwrite($f, "192.168.4.1");
@@ -36,8 +42,11 @@ if (isset($_POST["gpio-digital-out"]) && isset($_POST["gpio-digital-status"])) {
         "/end";
     $ch = curl_init($c_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
 
     $response = curl_exec($ch);
+    curl_close($ch);
 }
 if (
     isset($_POST["gpio-digital-in"]) &&
@@ -53,8 +62,11 @@ if (
         "/end";
     $ch = curl_init($c_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
 
     $response = curl_exec($ch);
+    curl_close($ch);
 
     echo $response;
 }
@@ -68,7 +80,11 @@ if (isset($_POST["dac-write-pin"]) && isset($_POST["dac-write-value"])) {
         "/end";
     $ch = curl_init($c_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
+    
     $response = curl_exec($ch);
+    curl_close($ch);
 }
 
 if (isset($_POST["dac-disable-pin"]) && isset($_POST["dac-disable-valid"])) {
@@ -79,13 +95,21 @@ if (isset($_POST["dac-disable-pin"]) && isset($_POST["dac-disable-valid"])) {
         "/end";
     $ch = curl_init($c_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
+    
     $response = curl_exec($ch);
+    curl_close($ch);
 }
 if (isset($_POST["delay-seconds"])) {
     $c_url = $url . "/delay/delay=" . $_POST["delay-seconds"] . "/end";
     $ch = curl_init($c_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
+    
     $response = curl_exec($ch);
+    curl_close($ch);
 }
 if (
     isset($_POST["analog-write-pin"]) &&
@@ -107,8 +131,11 @@ if (
         "/end";
     $ch = curl_init($c_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
-
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
+    
     $response = curl_exec($ch);
+    curl_close($ch);
 }
 
 include "esp32_user_control.html";

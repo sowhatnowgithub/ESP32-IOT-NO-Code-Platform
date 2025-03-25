@@ -148,9 +148,10 @@ ul {
     width: 100%; /*This is when you want the button to take the entire the space*/
 }
 form {
-    background-color: var(--primary-100);
+    background: var(--white);
     border-radius: var(--borderRadius);
     box-shadow: var(--shadow-2);
+    padding: 1px 2rem 2rem;
 }
 label {
     font-size: var(--smallText);
@@ -177,15 +178,12 @@ textarea {
 }
 
 .container {
-    background-color: #0f0e17;
-    padding: 10px;
     height: 100vh;
     display: flex;
     flex-grow: row;
     margin: 10px;
 }
 #tools {
-    background-color: white;
     flex: 1;
     border: 3px solid black;
     padding: 6px;
@@ -203,7 +201,15 @@ textarea {
 .element {
     margin: 10px;
 }
-
+.playground-mini {
+    background: var(--white);
+    width: 100%;
+    height: auto;
+    min-height: 50px;
+    border: 2px solid black;
+    border-radius: var(--borderRadius);
+    background-color: var(--backgroundColor);
+}
 .element .function {
     background: var(--white);
     padding: 10px;
