@@ -181,17 +181,25 @@ document.addEventListener("DOMContentLoaded", function (e) {
   sidebar.style.right = "0";
   sidebar.style.width = "140px";
   sidebar.style.height = "100vh";
-  sidebar.style.backgroundColor = "#f4f4f4";
+  sidebar.style.backgroundColor = "#efdfbb";
   sidebar.style.padding = "10px";
   sidebar.style.overflowY = "auto";
   sidebar.style.borderLeft = "2px solid #ccc";
+  sidebar.style.border = "3px solid white";
   document.body.appendChild(sidebar);
+
   function updateSidebar() {
     sidebar.innerHTML = "<h3>Variable</h3>";
     for (let key in variableNames) {
       let value = variableNames[key];
       let box_item = document.createElement("div");
       box_item.id = "box_variables";
+      box_item.style.background = "white";
+      box_item.style.display = "block";
+      box_item.style.borderRadius = "20px";
+      box_item.style.padding = "3px";
+      box_item.style.textAlign = "center";
+      box_item.style.marginBottom = "3px";
       box_item.innerHTML = `<p>${key} :-> ${value}</p>`;
       sidebar.appendChild(box_item);
     }

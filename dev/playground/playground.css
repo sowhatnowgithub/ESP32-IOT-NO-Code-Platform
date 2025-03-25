@@ -65,7 +65,7 @@ html {
     --shadow-4: 0 20px 25px -5px rgb(0 0 0), 0 8px 10px -6px rgb(0 0 0);
 }
 body {
-    background: var(--backgroundColor);
+    background: var(--white-600);
     font-family: var(--bodyFont);
     font-weight: 400;
     line-height: 1.75;
@@ -148,15 +148,13 @@ ul {
     width: 100%; /*This is when you want the button to take the entire the space*/
 }
 form {
-    background: var(--white);
+    background: var(--primary-200);
     border-radius: var(--borderRadius);
     box-shadow: var(--shadow-2);
-<<<<<<< Updated upstream
     padding: 1px 2rem 2rem;
-=======
     max-width: 350px;
->>>>>>> Stashed changes
 }
+
 label {
     font-size: var(--smallText);
     margin-bottom: 0.5rem;
@@ -182,45 +180,44 @@ textarea {
 }
 
 .container {
-<<<<<<< Updated upstream
-=======
-    background-color: #0f0e17;
     padding: 10px;
     width: 100%;
->>>>>>> Stashed changes
     height: 100vh;
     display: flex;
     flex-grow: row;
 }
 
 #tools {
+    background-color: var(--backgroundColor);
     flex: 1;
     border: 3px solid black;
     padding: 6px;
     min-width: 250px;
     overflow-x: scroll;
     overflow-y: scroll;
+    box-shadow: var(--shadow-2);
+}
+#tools:hover {
+    transform: var(--transition);
+    box-shadow: var(--shadow-4);
 }
 #playground {
+    background-color: var(--backgroundColor);
     flex: 3;
     padding: 6px;
     border: 3px solid black;
     margin: 6px;
     min-height: 600px;
     margin-right: 150px;
+    box-shadow: var(--shadow-2);
+}
+#playground:hover {
+    box-shadow: var(--shadow-4);
 }
 .element {
     margin: 10px;
 }
-.playground-mini {
-    background: var(--white);
-    width: 100%;
-    height: auto;
-    min-height: 50px;
-    border: 2px solid black;
-    border-radius: var(--borderRadius);
-    background-color: var(--backgroundColor);
-}
+
 .element .function {
     background: var(--white);
     padding: 10px;
