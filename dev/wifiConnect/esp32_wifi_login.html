@@ -1,28 +1,38 @@
 <!doctype html>
 <html>
-    <head>
-        <title>Damn - Esp32</title>
-        <style>
-            * {
-                box-sizing: border-box;
-                line-height: 2.5em;
-            }
-        </style>
-    </head>
-    <body>
+<head>
+    <title>ESP32 WiFi Setup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="esp32_wifi_login.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>ESP32 WiFi Setup</h1>
+        
         <form action="esp32_wifi_credentials_validation.php" method="post">
             <fieldset>
-                <legend>Set WiFi To connect</legend>
-                <label for="ssid">Enter SSID : </label>
-                <input type="text" name="ssid" />
+                <legend>Configure WiFi Connection</legend>
+                
+                <label for="ssid">WiFi Name (SSID):</label>
+                <input type="text" name="ssid" placeholder="Enter your WiFi name" required />
                 <br />
-                <label for="password">Enter Password :</label>
-                <input type="text" name="password" />
-                <input type="submit" name="submit" value="submit" />
+                
+                <label for="password">WiFi Password:</label>
+                <input type="password" name="password" placeholder="Enter your WiFi password" />
+                <br />
+                
+                <input type="submit" name="submit" value="Connect" />
             </fieldset>
         </form>
-        <button>
-            <a href="../esp32_user_control.html">Go Back to User Control</a>
-        </button>
-    </body>
+        
+        <div class="navigation">
+            <a href="../index.html">Back to Main Page</a>
+            <a href="../esp32_user_control.html">Control Panel</a>
+        </div>
+        
+        <div class="footer">
+            &copy; 2025 ESP32 No-Code Platform
+        </div>
+    </div>
+</body>
 </html>
