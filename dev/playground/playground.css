@@ -208,6 +208,7 @@ textarea {
     border: 3px solid black;
     margin: 6px;
     min-height: 600px;
+    overflow-y: scroll;
     margin-right: 150px;
     box-shadow: var(--shadow-2);
 }

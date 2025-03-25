@@ -7,7 +7,10 @@
         <meta http-equiv="author" content="sai" />
         <link rel="stylesheet" href="main.css" />
         <link rel="stylesheet" href="../normalize.css" />
-        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
     </head>
     <body>
         <div class="container">
@@ -27,34 +30,6 @@
                 <button class="load_playground">
                     <a>Load Playground</a>
                 </button>
-                <div class="element" draggable="true">
-                    <form action="../esp32_control_backend.php" method="post">
-                        <label for="gpio-digital-out"
-                            >GPIO - Digital - output:
-                        </label>
-                        <select name="gpio-digital-out">
-                            <option value="23">23</option>
-                            <option value="22">22</option>
-                            <option value="21">21</option>
-                            <option value="19">19</option>
-                            <option value="18">18</option>
-                            <option value="5">5</option>
-                        </select>
-                        <label for="gpio-digiral-status">HIGH</label>
-                        <input
-                            type="radio"
-                            name="gpio-digital-status"
-                            value="1"
-                        />
-                        <label for="gpio-digiral-status">LOW</label>
-                        <input
-                            type="radio"
-                            name="gpio-digital-status"
-                            value="0"
-                        />
-                        <br />
-                    </form>
-                </div>
                 <div class="element" draggable="true">
                     <form class="function variable">
                         <label for="variable_declaration">Variable Name:</label>
@@ -95,6 +70,55 @@
                 <div class="element" draggable="true">
                     <form class="function end">
                         <label for="end">End</label>
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form class="function if">
+                        If
+                        <label for="if_input_one">Variable Name One:</label>
+                        <input type="text" name="if_input_one" />
+                        <select name="condition">
+                            <option value="eq">equal to</option>
+                            <option value="neq">Not equal to</option>
+                            <option value="gt">Greater Than</option>
+                            <option value="lt">Less Than</option></select
+                        ><br />
+                        <label for="if_input_two">Variable Name Two:</label>
+                        <input type="text" name="if_input_two" />
+                        <br />
+                        <label for="then"
+                            >then(write the number of blocks that have to be
+                            executed)</label
+                        >
+                        <input type="number" name="then" />
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form action="../esp32_control_backend.php" method="post">
+                        <label for="gpio-digital-out"
+                            >GPIO - Digital - output:
+                        </label>
+                        <select name="gpio-digital-out">
+                            <option value="23">23</option>
+                            <option value="22">22</option>
+                            <option value="21">21</option>
+                            <option value="19">19</option>
+                            <option value="18">18</option>
+                            <option value="5">5</option>
+                        </select>
+                        <label for="gpio-digiral-status">HIGH</label>
+                        <input
+                            type="radio"
+                            name="gpio-digital-status"
+                            value="1"
+                        />
+                        <label for="gpio-digiral-status">LOW</label>
+                        <input
+                            type="radio"
+                            name="gpio-digital-status"
+                            value="0"
+                        />
+                        <br />
                     </form>
                 </div>
                 <div class="element" draggable="true">

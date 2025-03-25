@@ -67,9 +67,8 @@ document
         .querySelector("input[name='variable_declaration']")
         .value.trim(); // Get and trim variable name
       let variableValue =
-        parseInt(
+        parseFloat(
           variable.querySelector("input[name='variable_value']").value,
-          10,
         ) || 0; // Convert to integer
 
       if (variableName) {
@@ -124,7 +123,6 @@ document
     }
 
     let droppedForms = document.querySelectorAll(".playground_element form");
-
     async function submitFormForLoop(index, loop) {
       for (let i = 0; i < loop; i++) {
         await submitForm(index);
@@ -141,6 +139,53 @@ document
           return await submitFormForLoop(index + 1, loopCount);
         } else if (form.classList.contains("end")) {
           return await submitForm(index + 1);
+        } else if (form.classList.contains("if")) {
+          let value_one =
+            variableNames[
+              form.querySelector('input[name="if_input_one"]').value.trim()
+            ];
+          let value_two =
+            variableNames[
+              form.querySelector('input[name="if_input_two"]').value.trim()
+            ];
+          let condition = form
+            .querySelector('select[name="condition"]')
+            .value.trim();
+
+          let blocksExecuted = parseInt(
+            form.querySelector('input[name="then"]').value,
+            10,
+          );
+          switch (condition) {
+            case "eq":
+              if (value_one == value_two) {
+                submitForm(index + 1);
+              } else {
+                submitForm(index + blocksExecuted + 1);
+              }
+              break;
+            case "neq":
+              if (value_one != value_two) {
+                submitForm(index + 1);
+              } else {
+                submitForm(index + blocksExecuted + 1);
+              }
+              break;
+            case "gt":
+              if (value_one > value_two) {
+                submitForm(index + 1);
+              } else {
+                submitForm(index + blocksExecuted + 1);
+              }
+              break;
+            case "lt":
+              if (value_one < value_two) {
+                submitForm(index + 1);
+              } else {
+                submitForm(index + blocksExecuted + 1);
+              }
+              break;
+          }
         } else {
           let formData = new FormData(form);
           return await fetch(form.action, {
@@ -179,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
   sidebar.style.position = "fixed";
   sidebar.style.top = "0";
   sidebar.style.right = "0";
-  sidebar.style.width = "140px";
+  sidebar.style.width = "150px";
   sidebar.style.height = "100vh";
   sidebar.style.backgroundColor = "#efdfbb";
   sidebar.style.padding = "10px";
