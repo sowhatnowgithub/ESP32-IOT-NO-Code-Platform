@@ -34,5 +34,6 @@ if (
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
 
     $response = curl_exec($ch);
+    $response = substr($response, -10, 4);
     echo $response;
 }

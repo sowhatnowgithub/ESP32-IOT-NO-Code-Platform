@@ -151,7 +151,11 @@ form {
     background: var(--white);
     border-radius: var(--borderRadius);
     box-shadow: var(--shadow-2);
+<<<<<<< Updated upstream
     padding: 1px 2rem 2rem;
+=======
+    max-width: 350px;
+>>>>>>> Stashed changes
 }
 label {
     font-size: var(--smallText);
@@ -178,16 +182,22 @@ textarea {
 }
 
 .container {
+<<<<<<< Updated upstream
+=======
+    background-color: #0f0e17;
+    padding: 10px;
+    width: 100%;
+>>>>>>> Stashed changes
     height: 100vh;
     display: flex;
     flex-grow: row;
-    margin: 10px;
 }
+
 #tools {
     flex: 1;
     border: 3px solid black;
     padding: 6px;
-    min-width: 280px;
+    min-width: 250px;
     overflow-x: scroll;
     overflow-y: scroll;
 }
@@ -197,6 +207,7 @@ textarea {
     border: 3px solid black;
     margin: 6px;
     min-height: 600px;
+    margin-right: 150px;
 }
 .element {
     margin: 10px;

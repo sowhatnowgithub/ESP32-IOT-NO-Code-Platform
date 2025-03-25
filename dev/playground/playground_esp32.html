@@ -5,7 +5,6 @@
         <link rel="stylesheet" href="playground.css" />
         <link rel="stylesheet" href="../normalize.css" />
         <meta http-equiv="author" content="sai" />
-        <script src="playground.js" defer></script>
         <link rel="stylesheet" href="main.css" />
         <link rel="stylesheet" href="../normalize.css" />
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
@@ -54,6 +53,48 @@
                             value="0"
                         />
                         <br />
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form class="function variable">
+                        <label for="variable_declaration">Variable Name:</label>
+                        <input name="variable_declaration" type="text" />
+                        <br />
+                        <label for="variable_value">Variable Value</label>
+                        <input name="variable_value" type="number" />
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form class="function arithmatic">
+                        <label for="variable_zero">Variable Name =</label>
+                        <input name="variable_zero" type="text" />
+                        <br />
+
+                        <label for="variable_one">Variable Name 1:</label>
+                        <input name="variable_one" type="text" />
+                        <br />
+                        <label for="operation">Operation</label>
+                        <select name="operation">
+                            <option value="add">Add</option>
+                            <option value="sub">Sub</option>
+                            <option value="mul">Mul</option>
+                            <option value="div">Div</option>
+                            <option value="mod">Mod</option>
+                        </select>
+                        <br />
+                        <label for="variable_two">Variable Name 2:</label>
+                        <input name="variable_two" type="text" />
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form class="function for-loop">
+                        <label for="for-loop">For Loop</label>
+                        <input type="number" name="for-loop" min="1" />
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form class="function end">
+                        <label for="end">End</label>
                     </form>
                 </div>
                 <div class="element" draggable="true">
@@ -147,17 +188,7 @@
                         <br />
                     </form>
                 </div>
-                <div class="element" draggable="true">
-                    <form class="function for-loop">
-                        <label for="for-loop">For Loop</label>
-                        <input type="number" name="for-loop" min="1" />
-                    </form>
-                </div>
-                <div class="element" draggable="true">
-                    <form class="function end">
-                        <label for="end">End</label>
-                    </form>
-                </div>
+
                 <div class="element" draggable="true">
                     <form
                         action="playground_control_backend_read.php"
@@ -182,6 +213,10 @@
                                 INPUT_PULLDOWN
                             </option></select
                         ><br />
+                        <label for="varibale_declare_input"
+                            >Variable Input Name</label
+                        >
+                        <input type="text" name="variable_declare_input" />
                     </form>
                 </div>
                 <div class="element" draggable="true">
@@ -232,5 +267,6 @@
                 <button class="btn submit-playground">Submit-Playground</button>
             </div>
         </div>
+        <script src="playground.js" defer></script>
     </body>
 </html>
