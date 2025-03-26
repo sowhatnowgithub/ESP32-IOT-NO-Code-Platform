@@ -2,6 +2,8 @@
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 #include <DHT_U.h>
+#include <SPI.h>
+#include "Ucglib.h"
 #define DHTTYPE_11 DHT11
 IPAddress ip;
 String str1;
@@ -15,9 +17,15 @@ const char *ssid_ap = "esp32-iot";
 const char *pass_ap = "Sai12345";
 String ssid;
 String password;
+Ucglib_ST7735_18x128x160_HWSPI ucg(/*cd=*/ 21, /*cs=*/ 5, /*reset=*/ 22);//set these connectioin pins cd ->A0
+#define T 4000
+#define DLY() delay(2000)
+
 void setup(){
   Serial.begin(115200);
-
+  ucg.begin(UCG_FONT_MODE_TRANSPARENT);
+  //ucg.begin(UCG_FONT_MODE_SOLID);
+  ucg.clearScreen();
   WiFi.softAPConfig(local_ip,brodcast_ip,subnet);
   while(!WiFi.softAP(ssid_ap,pass_ap)){
     Serial.println("Bruh, Couldn't make the access point");
@@ -27,7 +35,19 @@ void setup(){
   Serial.println(ip_ap);
   server.begin();
 }
-
+ void text_display(string s )
+ {
+  ucg.setFont(ucg_font_ncenR12_tr);
+  ucg.setColor(255, 255, 255);
+  //ucg.setColor(0, 255, 0);
+  ucg.setColor(1, 255, 0,0);
+  
+  ucg.setPrintPos(0,25);
+  ucg.print(s);
+  delay(500);  
+    
+    
+ }
 
 void loop() {
   String header;
@@ -157,6 +177,12 @@ void loop() {
               client.print("Frequency: "); Serial.println(freq);
               client.print("Resolution: "); Serial.println(res);
               client.print("Duty Cycle: "); Serial.println(duty);
+            }
+            else if(header.indexOf("GET /text/") >= 0){
+              unsigned short int pos_start = header.indexOf("/display="); // 
+              unsigned short int pos_end = header.indexOf("/end");
+              String text = header.substring(pos_start+9,pos_end);
+              text_display(text);
             }
             else if(header.indexOf("GET /sensor/DHT11")>=0 )
             {

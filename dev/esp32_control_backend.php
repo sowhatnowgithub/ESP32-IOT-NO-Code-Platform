@@ -149,4 +149,20 @@ if (isset($_POST["dht11_data_pin"])) {
     echo $response . "<br>";
     curl_close($ch);
 }
+if (
+    isset($_POST["Text-display"]) &&
+    strcmp($_POST["Text-display"], "Null") != 0 ) {
+    $c_url =
+        $url .
+        "/text/display=" .
+        $_POST["Text-display"] .
+        "/end";
+    $ch = curl_init($c_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
+    $response = curl_exec($ch);
+    curl_close($ch);
+    echo $response;
+}
 include "esp32_user_control.html";
