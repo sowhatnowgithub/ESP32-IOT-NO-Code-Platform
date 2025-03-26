@@ -1,113 +1,179 @@
 <!doctype html>
 <html>
-<head>
-    <title>ESP32 Control Panel</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="esp32_user_control.css" />
-</head>
-<body>
-    <div class="container">
-        <h1>ESP32 Control Panel</h1>
-        
-        <div class="navigation">
-            <a href="wifiConnect/esp32_wifi_login.html">Connect to WiFi</a>
-            <a href="index.html">Main Page</a>
-            <a href="playground/playground_esp32.html">Playground</a>
-        </div>
+    <head>
+        <title>ESP32 Control Panel</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="esp32_user_control.css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>ESP32 Control Panel</h1>
 
-        <form action="esp32_control_backend.php" method="post">
-            <fieldset>
-                <legend>ESP32-WROOM Control</legend>
-                
-                <label for="gpio-digital-out">GPIO - Digital Output: </label>
-                <select name="gpio-digital-out">
-                    <option value="23">23</option>
-                    <option value="22">22</option>
-                    <option value="21">21</option>
-                    <option value="19">19</option>
-                    <option value="18">18</option>
-                    <option value="5">5</option>
-                </select>
-                <input type="radio" name="gpio-digital-status" value="1" id="high" /> 
-                <label for="high" style="width: auto;">HIGH</label>
-                <input type="radio" name="gpio-digital-status" value="0" id="low" /> 
-                <label for="low" style="width: auto;">LOW</label>
-                <br />
-                
-                <label for="gpio-digital-in">GPIO - Digital Input: </label>
-                <select name="gpio-digital-in">
-                    <option value="Null">Null</option>
-                    <option value="23">23</option>
-                    <option value="22">22</option>
-                    <option value="21">21</option>
-                    <option value="19">19</option>
-                    <option value="18">18</option>
-                    <option value="5">5</option>
-                </select>
-                <select name="gpio-digital-in-status">
-                    <option value="INPUT">INPUT</option>
-                    <option value="INPUT_PULLUP">INPUT_PULLUP</option>
-                    <option value="INPUT_PULLDOWN">INPUT_PULLDOWN</option>
-                </select>
-                <br />
-                
-                <label for="dac-write-pin">DAC Write (0-255 → 0V-3.3V): </label>
-                <select name="dac-write-pin">
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                </select>
-                <input type="number" name="dac-write-value" max="255" min="0" placeholder="Value" />
-                <br />
-                
-                <label for="dac-disable-pin">DAC Disable: </label>
-                <select name="dac-disable-pin">
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                </select>
-                <input type="checkbox" name="dac-disable-valid" value="true" id="disable" />
-                <label for="disable" style="width: auto;">DISABLE</label>
-                <br />
-                
-                <label for="delay-seconds">Delay (milliseconds): </label>
-                <input type="number" name="delay-seconds" min="0" placeholder="ms" />
-                <br />
-                
-                <label for="analog-write-pin">PWM - PIN: </label>
-                <select name="analog-write-pin">
-                    <option value="Null">Null</option>
-                    <option value="23">23</option>
-                    <option value="22">22</option>
-                    <option value="21">21</option>
-                    <option value="19">19</option>
-                    <option value="18">18</option>
-                    <option value="5">5</option>
-                </select>
-                <br />
-                
-                <label for="analog-write-freq">PWM - Frequency (Hz): </label>
-                <input type="number" min="0" name="analog-write-freq" placeholder="Hz" />
-                <br />
-                
-                <label for="analog-write-res">PWM - Resolution (1-20): </label>
-                <input type="number" min="1" max="20" name="analog-write-res" placeholder="Bits" />
-                <br />
-                
-                <label for="analog-write-duty">PWM - Duty Cycle: </label>
-                <input type="number" min="1" max="255" name="analog-write-duty" placeholder="Value" />
-                <br />
-                
-                <label for="disconnect">Connection Status: </label>
-                <input type="checkbox" name="CONNECTION_STATUS" value="LOW" id="disconnect" />
-                <label for="disconnect" style="width: auto;">Disconnect</label>
-                <br />
-                
-                <input type="submit" name="submit" value="Apply Settings" />
-            </fieldset>
-        </form>
-        
-        <div class="footer">
-            &copy; 2025 ESP32 No-Code Platform
+            <div class="navigation">
+                <a href="wifiConnect/esp32_wifi_login.html">Connect to WiFi</a>
+                <a href="index.html">Main Page</a>
+                <a href="playground/playground_esp32.html">Playground</a>
+            </div>
+
+            <form action="esp32_control_backend.php" method="post">
+                <fieldset>
+                    <legend>ESP32-WROOM Control</legend>
+
+                    <label for="gpio-digital-out"
+                        >GPIO - Digital Output:
+                    </label>
+                    <select name="gpio-digital-out">
+                        <option value="23">23</option>
+                        <option value="22">22</option>
+                        <option value="21">21</option>
+                        <option value="19">19</option>
+                        <option value="18">18</option>
+                        <option value="5">5</option>
+                    </select>
+                    <input
+                        type="radio"
+                        name="gpio-digital-status"
+                        value="1"
+                        id="high"
+                    />
+                    <label for="high" style="width: auto">HIGH</label>
+                    <input
+                        type="radio"
+                        name="gpio-digital-status"
+                        value="0"
+                        id="low"
+                    />
+                    <label for="low" style="width: auto">LOW</label>
+                    <br />
+
+                    <label for="gpio-digital-in">GPIO - Digital Input: </label>
+                    <select name="gpio-digital-in">
+                        <option value="Null">Null</option>
+                        <option value="23">23</option>
+                        <option value="22">22</option>
+                        <option value="21">21</option>
+                        <option value="19">19</option>
+                        <option value="18">18</option>
+                        <option value="5">5</option>
+                    </select>
+                    <select name="gpio-digital-in-status">
+                        <option value="INPUT">INPUT</option>
+                        <option value="INPUT_PULLUP">INPUT_PULLUP</option>
+                        <option value="INPUT_PULLDOWN">INPUT_PULLDOWN</option>
+                    </select>
+                    <br />
+                    <label for="dht11_data_pin">DHT11 - Pin</label>
+                    <select name="dht11_data_pin">
+                        <option value="Null">Null</option>
+                        <option value="23">23</option>
+                        <option value="22">22</option>
+                        <option value="21">21</option>
+                        <option value="19">19</option>
+                        <option value="18">18</option>
+                        <option value="5">5</option>
+                    </select>
+                    <br />
+                    <label for="dac-write-pin"
+                        >DAC Write (0-255 → 0V-3.3V):
+                    </label>
+                    <select name="dac-write-pin">
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                    </select>
+                    <input
+                        type="number"
+                        name="dac-write-value"
+                        max="255"
+                        min="0"
+                        placeholder="Value"
+                    />
+                    <br />
+
+                    <label for="dac-disable-pin">DAC Disable: </label>
+                    <select name="dac-disable-pin">
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                    </select>
+                    <input
+                        type="checkbox"
+                        name="dac-disable-valid"
+                        value="true"
+                        id="disable"
+                    />
+                    <label for="disable" style="width: auto">DISABLE</label>
+                    <br />
+
+                    <label for="delay-seconds">Delay (milliseconds): </label>
+                    <input
+                        type="number"
+                        name="delay-seconds"
+                        min="0"
+                        placeholder="ms"
+                    />
+                    <br />
+
+                    <label for="analog-write-pin">PWM - PIN: </label>
+                    <select name="analog-write-pin">
+                        <option value="Null">Null</option>
+                        <option value="23">23</option>
+                        <option value="22">22</option>
+                        <option value="21">21</option>
+                        <option value="19">19</option>
+                        <option value="18">18</option>
+                        <option value="5">5</option>
+                    </select>
+                    <br />
+
+                    <label for="analog-write-freq"
+                        >PWM - Frequency (Hz):
+                    </label>
+                    <input
+                        type="number"
+                        min="0"
+                        name="analog-write-freq"
+                        placeholder="Hz"
+                    />
+                    <br />
+
+                    <label for="analog-write-res"
+                        >PWM - Resolution (1-20):
+                    </label>
+                    <input
+                        type="number"
+                        min="1"
+                        max="20"
+                        name="analog-write-res"
+                        placeholder="Bits"
+                    />
+                    <br />
+
+                    <label for="analog-write-duty">PWM - Duty Cycle: </label>
+                    <input
+                        type="number"
+                        min="1"
+                        max="255"
+                        name="analog-write-duty"
+                        placeholder="Value"
+                    />
+                    <br />
+
+                    <label for="disconnect">Connection Status: </label>
+                    <input
+                        type="checkbox"
+                        name="CONNECTION_STATUS"
+                        value="LOW"
+                        id="disconnect"
+                    />
+                    <label for="disconnect" style="width: auto"
+                        >Disconnect</label
+                    >
+                    <br />
+
+                    <input type="submit" name="submit" value="Apply Settings" />
+                </fieldset>
+            </form>
+
+            <div class="footer">&copy; 2025 ESP32 No-Code Platform</div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

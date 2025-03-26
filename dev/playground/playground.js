@@ -340,4 +340,5 @@ load_playground.addEventListener("click", function (e) {
       })
       .catch((error) => console.error("error :", error));
   });
+  playgroundDetails = JSON.stringify(playgroundDetails, null, 2);
 });

@@ -82,7 +82,7 @@ if (isset($_POST["dac-write-pin"]) && isset($_POST["dac-write-value"])) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
     curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
-    
+
     $response = curl_exec($ch);
     curl_close($ch);
 }
@@ -97,7 +97,7 @@ if (isset($_POST["dac-disable-pin"]) && isset($_POST["dac-disable-valid"])) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
     curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
-    
+
     $response = curl_exec($ch);
     curl_close($ch);
 }
@@ -107,7 +107,7 @@ if (isset($_POST["delay-seconds"])) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
     curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
-    
+
     $response = curl_exec($ch);
     curl_close($ch);
 }
@@ -133,9 +133,19 @@ if (
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
     curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
-    
+
     $response = curl_exec($ch);
     curl_close($ch);
 }
+if (isset($_POST["dht11_data_pin"])) {
+    $c_url =
+        $url . "/sensor/DHT11/gpio_pin=" . $_POST["dht11_data_pin"] . "/end";
+    $ch = curl_init($c_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
 
+    $response = curl_exec($ch);
+    curl_close($ch);
+}
 include "esp32_user_control.html";
