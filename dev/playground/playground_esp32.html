@@ -98,7 +98,7 @@
                     <form
                         action="playground_control_backend_read.php"
                         method="post"
-                        class="read_from_esp32"
+                        class="read_from_esp32 dht11"
                     >
                         <label for="dht11_data_pin">DHT11 - Pin</label>
                         <select name="dht11_data_pin">
@@ -111,10 +111,14 @@
                             <option value="5">5</option>
                         </select>
                         <br />
-                        <label for="varibale_declare_input"
-                            >Variable Input Name</label
+                        <label for="temp_variable_name"
+                            >Variable Temperature Name</label
                         >
-                        <input type="text" name="variable_declare_input" />
+                        <input type="text" name="temp_variable_name" />
+                        <label for="humid_variable_name"
+                            >Variable Humid Name</label
+                        >
+                        <input type="text" name="humid_variable_name" />
                     </form>
                 </div>
                 <div class="element" draggable="true">

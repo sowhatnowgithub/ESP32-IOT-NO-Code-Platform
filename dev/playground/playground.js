@@ -145,7 +145,17 @@ document
             }
           }
         }
+        function extractSensorData(text) {
+          let humidityMatch = text.match(/Humidity:\s([\d.]+)%/);
+          let temperatureMatch = text.match(/Temperature:\s([\d.]+)°C/);
 
+          let humidity = humidityMatch ? parseFloat(humidityMatch[1]) : null;
+          let temperature = temperatureMatch
+            ? parseFloat(temperatureMatch[1])
+            : null;
+
+          return { humidity, temperature };
+        }
         if (form.classList.contains("for-loop")) {
           let loopCount =
             parseInt(form.querySelector("input[name='for-loop']").value, 10) ||
@@ -211,10 +221,25 @@ document
             .then(async (text) => {
               if (text && form.classList.contains("read_from_esp32")) {
                 response_esp32.push(text);
-                let variableNameRead = form.querySelector(
-                  'input[name="variable_declare_input"]',
-                ).value;
-                variableNames[variableNameRead] = text;
+
+                if (form.classList.contains("dht11")) {
+                  let temp_name = form
+                    .querySelector('input[name="temp_variable_name"]')
+                    .value.trim();
+                  let humid_name = form
+                    .querySelector('input[name="humid_variable_name"]')
+                    .value.trim();
+                  variableNames[humid_name] =
+                    text.match(/Humidity:\s([\d.]+)%/)[1];
+                  variableNames[temp_name] = text.match(
+                    /Temperature:\s([\d.]+)°C/,
+                  )[1];
+                } else {
+                  let variableNameRead = form.querySelector(
+                    'input[name="variable_declare_input"]',
+                  ).value;
+                  variableNames[variableNameRead] = parseFloat(text);
+                }
               }
               return await submitForm(index + 1);
             })
