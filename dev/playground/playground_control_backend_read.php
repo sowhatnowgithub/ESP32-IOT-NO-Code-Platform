@@ -36,4 +36,18 @@ if (
     $response = curl_exec($ch);
     $response = substr($response, -10, 4);
     echo $response;
+    curl_close($ch);
+}
+if (isset($_POST["dht11_data_pin"])) {
+    $c_url =
+        $url . "/sensor/DHT11/gpio_pin=" . $_POST["dht11_data_pin"] . "/end";
+    $ch = curl_init($c_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
+
+    $response = curl_exec($ch);
+    echo $response;
+
+    curl_close($ch);
 }

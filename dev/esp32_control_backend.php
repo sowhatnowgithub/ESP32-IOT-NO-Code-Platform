@@ -146,6 +146,7 @@ if (isset($_POST["dht11_data_pin"])) {
     curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
 
     $response = curl_exec($ch);
+    echo $response . "<br>";
     curl_close($ch);
 }
 include "esp32_user_control.html";

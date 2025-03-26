@@ -72,6 +72,7 @@
                         <label for="end">End</label>
                     </form>
                 </div>
+
                 <div class="element" draggable="true">
                     <form class="function if">
                         If
@@ -91,6 +92,59 @@
                             executed)</label
                         >
                         <input type="number" name="then" />
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form
+                        action="playground_control_backend_read.php"
+                        method="post"
+                        class="read_from_esp32"
+                    >
+                        <label for="dht11_data_pin">DHT11 - Pin</label>
+                        <select name="dht11_data_pin">
+                            <option value="Null">Null</option>
+                            <option value="23">23</option>
+                            <option value="22">22</option>
+                            <option value="21">21</option>
+                            <option value="19">19</option>
+                            <option value="18">18</option>
+                            <option value="5">5</option>
+                        </select>
+                        <br />
+                        <label for="varibale_declare_input"
+                            >Variable Input Name</label
+                        >
+                        <input type="text" name="variable_declare_input" />
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form
+                        action="playground_control_backend_read.php"
+                        class="read_from_esp32"
+                    >
+                        <label for="gpio-digital-in"
+                            >GPIO - Digital input:
+                        </label>
+                        <select name="gpio-digital-in">
+                            <option value="null">Null</option>
+                            <option value="23">23</option>
+                            <option value="22">22</option>
+                            <option value="21">21</option>
+                            <option value="19">19</option>
+                            <option value="18">18</option>
+                            <option value="5">5</option>
+                        </select>
+                        <select name="gpio-digital-in-status">
+                            <option value="INPUT">INPUT</option>
+                            <option value="INPUT_PULLUP">INPUT_PULLUP</option>
+                            <option value="INPUT_PULLDOWN">
+                                INPUT_PULLDOWN
+                            </option></select
+                        ><br />
+                        <label for="varibale_declare_input"
+                            >Variable Input Name</label
+                        >
+                        <input type="text" name="variable_declare_input" />
                     </form>
                 </div>
                 <div class="element" draggable="true">
@@ -191,36 +245,6 @@
                     </form>
                 </div>
 
-                <div class="element" draggable="true">
-                    <form
-                        action="playground_control_backend_read.php"
-                        class="read_from_esp32"
-                    >
-                        <label for="gpio-digital-in"
-                            >GPIO - Digital input:
-                        </label>
-                        <select name="gpio-digital-in">
-                            <option value="null">Null</option>
-                            <option value="23">23</option>
-                            <option value="22">22</option>
-                            <option value="21">21</option>
-                            <option value="19">19</option>
-                            <option value="18">18</option>
-                            <option value="5">5</option>
-                        </select>
-                        <select name="gpio-digital-in-status">
-                            <option value="INPUT">INPUT</option>
-                            <option value="INPUT_PULLUP">INPUT_PULLUP</option>
-                            <option value="INPUT_PULLDOWN">
-                                INPUT_PULLDOWN
-                            </option></select
-                        ><br />
-                        <label for="varibale_declare_input"
-                            >Variable Input Name</label
-                        >
-                        <input type="text" name="variable_declare_input" />
-                    </form>
-                </div>
                 <div class="element" draggable="true">
                     <form action="../esp32_control_backend.php" method="post">
                         <label for="dac-write-pin"

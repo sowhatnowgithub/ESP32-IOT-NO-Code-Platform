@@ -214,7 +214,7 @@ document
                 let variableNameRead = form.querySelector(
                   'input[name="variable_declare_input"]',
                 ).value;
-                variableNames[variableNameRead] = parseInt(text);
+                variableNames[variableNameRead] = text;
               }
               return await submitForm(index + 1);
             })
