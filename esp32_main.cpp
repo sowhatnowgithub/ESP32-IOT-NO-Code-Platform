@@ -1,4 +1,8 @@
 #include<WiFi.h>
+#include <Adafruit_Sensor.h>
+#include <DHT.h>
+#include <DHT_U.h>
+#define DHTTYPE_11 DHT11
 IPAddress ip;
 String str1;
 String str2;
@@ -138,7 +142,7 @@ void loop() {
               String gpio_pin = header.substring(pos_start+10,pos_end);
               pos_start = header.indexOf("/res=");
               String attach_freq = header.substring(pos_end+6, pos_start);
-              pos_end = header.indexOf("/duty="); 
+              pos_end = header.indexOf("/duty=");
               String write_res = header.substring(pos_start+5, pos_end);
               pos_start = header.indexOf("/end");
               String write_duty = header.substring(pos_end+6,pos_start);
@@ -149,12 +153,44 @@ void loop() {
               analogWrite(pin, duty);
               analogWriteResolution(res);
               analogWriteFrequency(freq);
-              Serial.print("GPIO Pin: "); Serial.println(pin);
-              Serial.print("Frequency: "); Serial.println(freq);
-              Serial.print("Resolution: "); Serial.println(res);
-              Serial.print("Duty Cycle: "); Serial.println(duty);
+              client.print("GPIO Pin: "); Serial.println(pin);
+              client.print("Frequency: "); Serial.println(freq);
+              client.print("Resolution: "); Serial.println(res);
+              client.print("Duty Cycle: "); Serial.println(duty);
             }
-   
+            else if(header.indexOf("GET /sensor/DHT11")>=0 )
+            {
+                unsigned short int pos_start = header.indexOf("/gpio_pin="); // 13
+                unsigned short int pos_end = header.indexOf("/end");
+                String pin = header.substring(pos_start+10,pos_end);
+                int pin_new=pin.toInt();
+
+                DHT dht(pin_new,DHTTYPE_11);  // Initialize DHT sensor
+dht.begin();
+                delay(500);  // Wait for sensor response
+
+  float humidity = dht.readHumidity();      // Read humidity
+  float temperatureC = dht.readTemperature(); // Read temperature (Celsius)
+  float temperatureF = dht.readTemperature(true); // Read temperature (Fahrenheit)
+
+  if (isnan(humidity) || isnan(temperatureC) || isnan(temperatureF)) {
+    Serial.println("⚠️ Failed to read from DHT sensor!");
+    return;
+  }
+
+  // Compute heat index
+  float heatIndexC = dht.computeHeatIndex(temperatureC, humidity, false);
+  float heatIndexF = dht.computeHeatIndex(temperatureF, humidity);
+
+  // Print Data
+  client.print("Humidity: "); client.print(humidity); client.print("% | ");
+  client.print("Temperature: "); client.print(temperatureC); client.print("°C / ");
+  client.print(temperatureF); client.print("°F | ");
+  client.print("Heat Index: "); client.print(heatIndexC); client.print("°C / ");
+  client.print(heatIndexF); client.println("°F");
+
+            }
+
             client.println();
             break;
           }
