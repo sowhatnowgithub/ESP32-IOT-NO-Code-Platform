@@ -31,7 +31,7 @@
                     <a>Load Playground</a>
                 </button>
                 <div class="element" draggable="true">
-                    <form class="function variable">
+                    <form class="function variable" id="form_variable">
                         <label for="variable_declaration">Variable Name:</label>
                         <input name="variable_declaration" type="text" />
                         <br />
@@ -40,7 +40,7 @@
                     </form>
                 </div>
                 <div class="element" draggable="true">
-                    <form class="function arithmatic">
+                    <form class="function arithmatic" id="form_arithmatic">
                         <label for="variable_zero">Variable Name =</label>
                         <input name="variable_zero" type="text" />
                         <br />
@@ -62,19 +62,19 @@
                     </form>
                 </div>
                 <div class="element" draggable="true">
-                    <form class="function for-loop">
+                    <form class="function for-loop" id="form_loop">
                         <label for="for-loop">For Loop</label>
                         <input type="number" name="for-loop" min="1" />
                     </form>
                 </div>
                 <div class="element" draggable="true">
-                    <form class="function end">
+                    <form class="function end" id="form_end">
                         <label for="end">End</label>
                     </form>
                 </div>
 
                 <div class="element" draggable="true">
-                    <form class="function if">
+                    <form class="function if" id="form_id">
                         If
                         <label for="if_input_one">Variable Name One:</label>
                         <input type="text" name="if_input_one" />
@@ -99,6 +99,7 @@
                         action="playground_control_backend_read.php"
                         method="post"
                         class="read_from_esp32 dht11"
+                        id="form_dht11"
                     >
                         <label for="dht11_data_pin">DHT11 - Pin</label>
                         <select name="dht11_data_pin">
@@ -125,6 +126,7 @@
                     <form
                         action="playground_control_backend_read.php"
                         class="read_from_esp32"
+                        id="form_digital_in"
                     >
                         <label for="gpio-digital-in"
                             >GPIO - Digital input:
@@ -152,7 +154,11 @@
                     </form>
                 </div>
                 <div class="element" draggable="true">
-                    <form action="../esp32_control_backend.php" method="post">
+                    <form
+                        action="../esp32_control_backend.php"
+                        method="post"
+                        id="form_digital_out"
+                    >
                         <label for="gpio-digital-out"
                             >GPIO - Digital - output:
                         </label>
@@ -180,7 +186,11 @@
                     </form>
                 </div>
                 <div class="element" draggable="true">
-                    <form action="../esp32_control_backend.php" method="post">
+                    <form
+                        action="../esp32_control_backend.php"
+                        method="post"
+                        id="form_pwm_pin"
+                    >
                         <label for="analog-write-pin">PWM - PIN</label>
                         <select name="analog-write-pin">
                             <option value="Null">Null</option>
@@ -205,7 +215,11 @@
                     </form>
                 </div>
                 <div class="element" draggable="true">
-                    <form action="../esp32_control_backend.php" method="post">
+                    <form
+                        action="../esp32_control_backend.php"
+                        method="post"
+                        id="form_internal_led_out"
+                    >
                         <label for="gpio-digital-out"
                             >Internal Led Control
                         </label>
@@ -229,7 +243,11 @@
                     </form>
                 </div>
                 <div class="element" draggable="true">
-                    <form action="../esp32_control_backend.php" method="post">
+                    <form
+                        action="../esp32_control_backend.php"
+                        method="post"
+                        id="form_analog_write"
+                    >
                         <label for="analog-write-pin"
                             >PWM -Internal - PIN</label
                         >
@@ -250,7 +268,11 @@
                 </div>
 
                 <div class="element" draggable="true">
-                    <form action="../esp32_control_backend.php" method="post">
+                    <form
+                        action="../esp32_control_backend.php"
+                        method="post"
+                        id="form_dac_write"
+                    >
                         <label for="dac-write-pin"
                             >DAC Write(0-255 -> 0V-3.3V)(input range 0 -
                             255)</label
@@ -264,7 +286,11 @@
                     </form>
                 </div>
                 <div class="element" draggable="true">
-                    <form action="../esp32_control_backend.php" method="post">
+                    <form
+                        action="../esp32_control_backend.php"
+                        method="post"
+                        id="form_dac_disable"
+                    >
                         <label for="dac-disable-pin">DAC Disable</label>
                         <select name="dac-disable-pin">
                             <option value="25">25</option>
@@ -279,7 +305,11 @@
                     </form>
                 </div>
                 <div class="element" draggable="true">
-                    <form action="../esp32_control_backend.php" method="post">
+                    <form
+                        action="../esp32_control_backend.php"
+                        method="post"
+                        id="form_delay"
+                    >
                         <label for="delay-seconds"
                             >Delay (in milli seconds)</label
                         >
