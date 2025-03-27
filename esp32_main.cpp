@@ -38,7 +38,7 @@ void text_display(String s) {
   ucg.setColor(255, 255, 255);
   //ucg.setColor(0, 255, 0);
   ucg.setColor(1, 255, 0, 0);
-  
+
   ucg.setPrintPos(0, 25);
   ucg.print(s);
   delay(500);
@@ -54,18 +54,18 @@ void setup() {
 
   // Configure AP with specific IP settings
   WiFi.softAPConfig(local_ip, brodcast_ip, subnet);
-  
+
   // Start the Access Point
   while (!WiFi.softAP(ssid_ap, pass_ap)) {
     Serial.println("Bruh, Couldn't make the access point");
     delay(500);
   }
-  
+
   // Get and display the AP IP address
   ip_ap = WiFi.softAPIP();
   Serial.print("For Access Point IP:- ");
   Serial.println(ip_ap);
-  
+
   // Start the web server
   server.begin();
   Serial.println("HTTP server started");
@@ -87,9 +87,9 @@ void loop() {
             client.println("Content-type:text/html");
             client.println("Connection: close");
             client.println();
-            
+
             // Handle WiFi scanner page
-            if (header.indexOf("GET / HTTP") >= 0) {
+            if (header.indexOf("GET /wifiscan HTTP") >= 0) {
               client.println("<html><body><h1>WiFi Scanner</h1>");
               client.println("<div style='margin-bottom: 10px;'>");
               client.println("<button onclick=\"scanNetworks()\" style='margin-right: 10px;'>Scan for WiFi Networks</button>");
@@ -105,7 +105,7 @@ void loop() {
               client.println("</script>");
               client.println("</body></html>");
             }
-            
+
             // Handle scan request
             else if (header.indexOf("GET /scan") >= 0) {
               String result = "Scanning for networks...\n";
@@ -121,16 +121,16 @@ void loop() {
               }
               client.println(result);
             }
-            
+
             // Original server functionality
             else {
               client.print("ESP32 - Currently located at :");
-              if (WiFi.status() == WL_CONNECTED) 
+              if (WiFi.status() == WL_CONNECTED)
                 client.println(ip);
-              else 
+              else
                 client.println(ip_ap);
               client.print("<br>");
-              
+
               if (header.indexOf("GET /wifi_connect") >= 0) {
                 Serial.println("Entered here");
                 unsigned short int pos_start = header.indexOf("/ssid="); // 13
@@ -159,7 +159,7 @@ void loop() {
                   client.println("connection Failed");
                 }
               }
-              
+
               if (header.indexOf("GET /digital/OUT") >= 0) {
                 unsigned short int pos_start = header.indexOf("/gpio_pin="); // 13
                 unsigned short int pos_end = header.indexOf("/status=");
@@ -234,17 +234,17 @@ void loop() {
                 analogWrite(pin, duty);
                 analogWriteResolution(res);
                 analogWriteFrequency(freq);
-                Serial.print("GPIO Pin: "); 
+                Serial.print("GPIO Pin: ");
                 Serial.println(pin);
-                Serial.print("Frequency: "); 
+                Serial.print("Frequency: ");
                 Serial.println(freq);
-                Serial.print("Resolution: "); 
+                Serial.print("Resolution: ");
                 Serial.println(res);
-                Serial.print("Duty Cycle: "); 
+                Serial.print("Duty Cycle: ");
                 Serial.println(duty);
               }
               else if (header.indexOf("GET /text/") >= 0) {
-                unsigned short int pos_start = header.indexOf("/display="); // 
+                unsigned short int pos_start = header.indexOf("/display="); //
                 unsigned short int pos_end = header.indexOf("/end");
                 String text = header.substring(pos_start + 9, pos_end);
                 text_display(text);
@@ -254,24 +254,24 @@ void loop() {
                 unsigned short int pos_end = header.indexOf("/end");
                 String pin = header.substring(pos_start + 10, pos_end);
                 int pin_new = pin.toInt();
-                
+
                 DHT dht(pin_new, DHTTYPE_11);  // Initialize DHT sensor
                 dht.begin();
                 delay(500);  // Wait for sensor response
-                
+
                 float humidity = dht.readHumidity();      // Read humidity
                 float temperatureC = dht.readTemperature(); // Read temperature (Celsius)
                 float temperatureF = dht.readTemperature(true); // Read temperature (Fahrenheit)
-                
+
                 if (isnan(humidity) || isnan(temperatureC) || isnan(temperatureF)) {
                   Serial.println("⚠️ Failed to read from DHT sensor!");
                   return;
                 }
-                
+
                 // Compute heat index
                 float heatIndexC = dht.computeHeatIndex(temperatureC, humidity, false);
                 float heatIndexF = dht.computeHeatIndex(temperatureF, humidity);
-                
+
                 // Print Data
                 client.print("Humidity: "); client.print(humidity); client.print("% | ");
                 client.print("Temperature: "); client.print(temperatureC); client.print("°C / ");
@@ -280,7 +280,7 @@ void loop() {
                 client.print(heatIndexF); client.println("°F");
               }
             }
-            
+
             client.println();
             break;
           }

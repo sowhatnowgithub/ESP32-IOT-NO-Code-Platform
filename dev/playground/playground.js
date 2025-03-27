@@ -399,9 +399,22 @@ load_playground.addEventListener("click", function (e) {
           });
           let formWrapper = document.createElement("div");
           formWrapper.classList.add("playground_element");
+          formWrapper.setAttribute("draggable", true);
           formWrapper.appendChild(newForm);
-
           playground.appendChild(formWrapper);
+
+          let playground_elements = playground.querySelectorAll(
+            ".playground_element",
+          );
+          for (let playground_element of playground_elements) {
+            playground_element.addEventListener("dragstart", function (e) {
+              e.target.classList.add("being-dragged");
+            });
+
+            playground_element.addEventListener("dragend", function (e) {
+              e.target.classList.remove("being-dragged"); // ✅ Fix typo "traget"
+            });
+          }
         });
       })
       .catch((error) => console.error("Error loading playground:", error));

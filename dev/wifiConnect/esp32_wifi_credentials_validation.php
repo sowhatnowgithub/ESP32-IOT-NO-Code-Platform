@@ -1,14 +1,18 @@
-_credentials_validation.php
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ESP32 WiFi Connection</title>
-    <?php
+    <?php // Increase the PHP execution time limit
+// Increase the PHP execution time limit
+// Increase the PHP execution time limit
     // Increase the PHP execution time limit
-    set_time_limit(120); // Set to 120 seconds
-    ?>
+    // Increase the PHP execution time limit
+    // Increase the PHP execution time limit
+    set_time_limit(120);
+// Set to 120 seconds
+?>
     <style>
         /* Base styles */
         body {
@@ -151,7 +155,7 @@ _credentials_validation.php
             margin: 20px 0;
             border-radius: 5px;
         }
-        
+
         /* ESP32 direct connection notice */
         .direct-connect {
             margin-top: 25px;
@@ -166,7 +170,7 @@ _credentials_validation.php
             background-color: #ff9800;
             margin-top: 10px;
         }
-        
+
         .wifi-manager-btn:hover {
             background-color: #f57c00;
         }
@@ -176,8 +180,7 @@ _credentials_validation.php
     <div class="container">
         <h1>ESP32 WiFi Connection</h1>
         <div class="result-container">
-            <?php 
-            if (isset($_POST["ip"]) != 1) {
+            <?php if (isset($_POST["ip"]) != 1) {
                 $url = "http://192.168.4.1";
                 if (file_exists("../file_esp32_ip.txt")) {
                     $u = file("../file_esp32_ip.txt");
@@ -202,50 +205,52 @@ _credentials_validation.php
                     echo '<div class="navigation">';
                     echo '<a href="../esp32_user_control.html">Go to User Control Page</a>';
                     echo '<a href="http://localhost:8000/../esp32_user_control.html">Go Back to Local Host</a>';
-                    echo '</div>';
-                    echo '<p>If you want to enable your ESP32, go back to localhost:8000, as once you enable, the present connection will be lost.</p>';
-                    echo '</div></div></body></html>';
+                    echo "</div>";
+                    echo "<p>If you want to enable your ESP32, go back to localhost:8000, as once you enable, the present connection will be lost.</p>";
+                    echo "</div></div></body></html>";
                     exit();
                 }
-                
-                echo '<h2>Connection Status</h2>';
-                echo '<p>Currently accessing the URL: <span class="ip-display">' . $url . '</span></p>';
-                
-                // Add the direct ESP32 connection link
-                echo '<div class="direct-connect">';
-                echo '<p>If you are connected to the ESP32-IOT network, you can configure WiFi settings directly:</p>';
-                echo '<a href="http://192.168.4.1" target="_blank">Connect to ESP32 WiFi Configuration</a>';
-                
-                // Add WiFiManager page link
-                echo '<p>Or use the ESP32 WiFiManager to configure network settings:</p>';
-                echo '<a href="http://192.168.4.1/wifi" target="_blank" class="wifi-manager-btn">Open WiFiManager Configuration</a>';
-                echo '</div>';
-                
+
+                echo "<h2>Connection Status</h2>";
+                echo '<p>Currently accessing the URL: <span class="ip-display">' .
+                    $url .
+                    "</span></p>";
+
                 $ssid = urlencode($_POST["ssid"]);
                 $pass = urldecode($_POST["password"]);
-                $url = $url . "/wifi_connect/ssid=" . "$ssid" . "/pass=" . "$pass" . "/end";
+                $url =
+                    $url .
+                    "/wifi_connect/ssid=" .
+                    "$ssid" .
+                    "/pass=" .
+                    "$pass" .
+                    "/end";
                 $ch = curl_init($url);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); // 10 second connection timeout
                 curl_setopt($ch, CURLOPT_TIMEOUT, 20); // 20 second execution timeout
                 $response = curl_exec($ch);
-                
+
                 if ($response === false) {
                     $error = curl_error($ch);
-                    echo '<div class="error-message">Connection to ESP32 failed: ' . $error . '</div>';
+                    echo '<div class="error-message">Connection to ESP32 failed: ' .
+                        $error .
+                        "</div>";
                     echo '<div class="navigation">';
-                    echo '<a href="esp32_wifi_login.html">Try Again</a>';
+                    echo '<a href="esp32_wifi_login.php">Try Again</a>';
                     // Add WiFiManager access here too
-                    echo '<a href="http://192.168.4.1/wifi" target="_blank" class="wifi-manager-btn">Open WiFiManager</a>';
-                    echo '</div>';
-                } else if (strpos($response, "WiFi Ip:") !== false && isset($response) == 1) {
+                    echo "</div>";
+                } elseif (
+                    strpos($response, "WiFi Ip:") !== false &&
+                    isset($response) == 1
+                ) {
                     $pos_start = strpos($response, "WiFi Ip:");
                     $ip = trim(substr($response, $pos_start + 8, -1));
-                    
+
                     $f = fopen("../file_esp32_ip.txt", "w");
                     fwrite($f, $ip);
                     fclose($f);
-                    
+
                     $a = 0;
                     $ip_updated = "";
                     for ($i = 0; $i < strlen($ip); $i++) {
@@ -258,31 +263,35 @@ _credentials_validation.php
                             break;
                         }
                     }
-                    
+
                     echo '<div class="success-message">Successfully connected to WiFi!</div>';
-                    echo '<p>ESP32 IP Address: <span class="ip-display">' . $ip . '</span></p>';
-                    
+                    echo '<p>ESP32 IP Address: <span class="ip-display">' .
+                        $ip .
+                        "</span></p>";
+
                     echo '<form action="esp32_php_server_start.php" method="post">';
                     echo '<input type="checkbox" name="wifi-set" value="1"> WiFi Change is Complete<br>';
-                    echo '<input type="hidden" name="ip" value="' . $ip_updated . '">';
+                    echo '<input type="hidden" name="ip" value="' .
+                        $ip_updated .
+                        '">';
                     echo '<input type="submit" name="submit" value="Continue">';
-                    echo '</form>';
-                    
+                    echo "</form>";
+
                     // Add a link to access WiFiManager after successful connection
                     echo '<div class="navigation">';
-                    echo '<a href="http://' . $ip . '/wifi" target="_blank" class="wifi-manager-btn">Configure Network Settings with WiFiManager</a>';
-                    echo '</div>';
+                    echo '<a href="http://' .
+                        $ip .
+                        '/wifi" target="_blank" class="wifi-manager-btn">Configure Network Settings with WiFiManager</a>';
+                    echo "</div>";
                 } else {
                     echo '<div class="error-message">Failed to connect to WiFi. Please check your SSID and password.</div>';
                     echo '<div class="navigation">';
-                    echo '<a href="esp32_wifi_login.html">Try Again</a>';
+                    echo '<a href="esp32_wifi_login.php">Try Again</a>';
                     echo '<a href="../esp32_user_control.html">Go to ESP32 Control Page</a>';
-                    echo '<a href="http://192.168.4.1/wifi" target="_blank" class="wifi-manager-btn">Use WiFiManager Instead</a>';
-                    echo '</div>';
+                    echo "</div>";
                 }
                 curl_close($ch);
-            }
-            ?>
+            } ?>
         </div>
     </div>
 </body>
