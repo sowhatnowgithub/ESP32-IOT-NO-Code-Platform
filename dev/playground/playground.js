@@ -69,6 +69,117 @@ function replaceVariableWithValue(formData) {
 
   return updatedFormData;
 }
+let points = {};
+
+function drawGraphSinglePoint(
+  xValue,
+  yValue,
+  id_form,
+  yAxisLabel = "Temperature (°C)",
+  yMax = 100,
+) {
+  const canvas = document.getElementById(id_form);
+  const ctx = canvas.getContext("2d");
+
+  if (!points[id_form]) {
+    points[id_form] = [];
+  }
+
+  // Store the new point
+  points[id_form].push({ x: xValue, y: yValue });
+
+  // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Styling
+  ctx.lineWidth = 2;
+  ctx.font = "14px Arial";
+  ctx.fillStyle = "#333"; // Text color
+
+  // Define scaling
+  let xScale = 700 / 40; // X range expanded (0-40)
+  let yScale = 400 / yMax; // Y range dynamic based on user input
+
+  // Draw grid lines
+  ctx.strokeStyle = "#ddd"; // Light grey grid
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 40; i += 5) {
+    let xPos = 50 + i * xScale;
+    ctx.beginPath();
+    ctx.moveTo(xPos, 50);
+    ctx.lineTo(xPos, 450);
+    ctx.stroke();
+  }
+  for (let i = 0; i <= yMax; i += yMax / 5) {
+    let yPos = 450 - i * yScale;
+    ctx.beginPath();
+    ctx.moveTo(50, yPos);
+    ctx.lineTo(750, yPos);
+    ctx.stroke();
+  }
+
+  // Draw axes
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(50, 450); // X-axis start
+  ctx.lineTo(750, 450); // X-axis end
+  ctx.moveTo(50, 50); // Y-axis start
+  ctx.lineTo(50, 450); // Y-axis end
+  ctx.stroke();
+
+  // X-axis labels
+  ctx.fillStyle = "black";
+  for (let i = 0; i <= 40; i += 5) {
+    let xPos = 50 + i * xScale;
+    ctx.fillText(i, xPos - 5, 470);
+  }
+
+  // Y-axis labels
+  for (let i = 0; i <= yMax; i += yMax / 5) {
+    let yPos = 450 - i * yScale;
+    ctx.fillText(i.toFixed(0), 20, yPos + 5);
+  }
+
+  // Draw curve and points
+  ctx.strokeStyle = "#007bff"; // Blue color for lines
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+
+  points[id_form].forEach(({ x, y }, index) => {
+    let xPlot = 50 + index * xScale * 1.5; // Adjust for closer spacing
+    let yPlot = 450 - y * yScale;
+
+    // Connect points with lines
+    if (index === 0) {
+      ctx.moveTo(xPlot, yPlot);
+    } else {
+      ctx.lineTo(xPlot, yPlot);
+    }
+  });
+
+  ctx.stroke();
+
+  // Draw points
+  points[id_form].forEach(({ x, y }, index) => {
+    let xPlot = 50 + index * xScale * 1.5; // Adjust for closer spacing
+    let yPlot = 450 - y * yScale;
+
+    ctx.fillStyle = "red";
+    ctx.beginPath();
+    ctx.arc(xPlot, yPlot, 4, 0, 2 * Math.PI); // Smaller points (radius 4)
+    ctx.fill();
+  });
+
+  // Axis Labels
+  ctx.fillText("Time (s)", 350, 490);
+  ctx.save();
+  ctx.translate(15, 250);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText(yAxisLabel, 0, 0);
+  ctx.restore();
+}
+
 document
   .querySelector(".submit-playground")
   .addEventListener("click", async function (e) {
@@ -234,6 +345,20 @@ document
                   variableNames[temp_name] = text.match(
                     /Temperature:\s([\d.]+)°C/,
                   )[1];
+                  drawGraphSinglePoint(
+                    1,
+                    variableNames[humid_name],
+                    "humid_pointchart",
+                    "Humidity",
+                    100,
+                  );
+                  drawGraphSinglePoint(
+                    1,
+                    variableNames[temp_name],
+                    "temp_pointchart",
+                    "temperature",
+                    50,
+                  );
                 } else {
                   let variableNameRead = form.querySelector(
                     'input[name="variable_declare_input"]',
@@ -285,7 +410,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
       box_item.style.padding = "3px";
       box_item.style.textAlign = "center";
       box_item.style.marginBottom = "3px";
-      box_item.innerHTML = `<p>${key} :-> ${value}</p>`;
+      box_item.innerHTML = <p>${key} :-> ${value}</p>;
       sidebar.appendChild(box_item);
     }
   }
@@ -367,7 +492,11 @@ load_playground.addEventListener("click", function (e) {
 
           // Clone form structure
           let newForm = originalForm.cloneNode(true);
+<<<<<<< HEAD
+          newForm.id = ${jsonData.form_id}_loaded; // Unique ID for new form
+=======
           newForm.id = `${jsonData.form_id}_loaded`; // Unique ID for new form
+>>>>>>> 463a9ede28a8917865c9db0789b4a62c27506a66
 
           // Map saved values into new form
           Object.keys(jsonData).forEach((key) => {
@@ -378,7 +507,11 @@ load_playground.addEventListener("click", function (e) {
 
             if (field.type === "radio") {
               let radioToCheck = newForm.querySelector(
+<<<<<<< HEAD
+                input[type="radio"][name="${key}"][value="${jsonData[key]}"],
+=======
                 `input[type="radio"][name="${key}"][value="${jsonData[key]}"]`,
+>>>>>>> 463a9ede28a8917865c9db0789b4a62c27506a66
               );
               if (radioToCheck) radioToCheck.checked = true;
             } else if (field.type === "checkbox") {
@@ -387,7 +520,11 @@ load_playground.addEventListener("click", function (e) {
                 : [jsonData[key]];
               values.forEach((val) => {
                 let checkbox = newForm.querySelector(
+<<<<<<< HEAD
+                  input[type="checkbox"][name="${key}"][value="${val}"],
+=======
                   `input[type="checkbox"][name="${key}"][value="${val}"]`,
+>>>>>>> 463a9ede28a8917865c9db0789b4a62c27506a66
                 );
                 if (checkbox) checkbox.checked = true;
               });
@@ -419,4 +556,8 @@ load_playground.addEventListener("click", function (e) {
       })
       .catch((error) => console.error("Error loading playground:", error));
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 463a9ede28a8917865c9db0789b4a62c27506a66
