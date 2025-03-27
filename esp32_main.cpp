@@ -35,19 +35,72 @@ void setup(){
   Serial.println(ip_ap);
   server.begin();
 }
- void text_display(string s )
- {
-  ucg.setFont(ucg_font_ncenR12_tr);
-  ucg.setColor(255, 255, 255);
-  //ucg.setColor(0, 255, 0);
-  ucg.setColor(1, 255, 0,0);
-  
-  ucg.setPrintPos(0,25);
-  ucg.print(s);
-  delay(500);  
-    
-    
- }
+ 
+ void display_word(String font_size,String animation_type, String alignment, int r, int g, int b,String s) {
+  // Set text color
+   // Set text color
+   ucg.setColor(r, g, b);
+
+   // Set the font size
+   if (font_size == "small") {
+     ucg.setFont(ucg_font_ncenR12_tr); // Small font
+   } else if (font_size == "medium") {
+     ucg.setFont(ucg_font_ncenB18_tr); // Medium font
+   } else if (font_size == "larger") {
+     ucg.setFont(ucg_font_ncenB24_tr); // Larger font
+   } else {
+     ucg.setFont(ucg_font_ncenR12_tr); // Default small font
+   }
+ 
+   // Alignment handling (for non-animated text)
+   int x = 0;
+   if (alignment == "left") {
+     x = 0;
+   } else if (alignment == "right") {
+     x = 128 - ucg.getStrWidth(s.c_str()); // Right alignment
+   } else if (alignment == "middle") {
+     x = (128 - ucg.getStrWidth(s.c_str())) / 2; // Center alignment
+   }
+ 
+   // Apply animation type
+   if (animation_type == "scrolling") {
+     int start_x = -ucg.getStrWidth(s.c_str());  // Start from off-screen (left)
+     int end_x = 128;  // Move to off-screen right
+     int y = 80;  // Fixed vertical position
+ 
+     int prev_x = start_x; // Store previous position
+ 
+     for (int i = start_x; i <= end_x; i++) {
+       // Overwrite previous position with background color (black)
+       ucg.setColor(0, 0, 0);
+       ucg.setPrintPos(prev_x, y);
+       ucg.print(s);
+ 
+       // Draw text at new position
+       ucg.setColor(r, g, b);
+       ucg.setPrintPos(i, y);
+       ucg.print(s);
+ 
+       prev_x = i; // Update previous position
+       delay(50); // Adjust speed
+     }
+   } 
+   else if (animation_type == "blinking") {
+     for (int i = 0; i < 10; i++) {
+       ucg.setColor(i % 2 == 0 ? 0 : r, i % 2 == 0 ? 0 : g, i % 2 == 0 ? 0 : b);
+       ucg.setPrintPos(x, 80);
+       ucg.print(s);
+       delay(500);
+     }
+   } 
+   else {
+     ucg.clearScreen();
+     ucg.setColor(r, g, b);
+     ucg.setPrintPos(x, 80);
+     ucg.print(s);
+   }
+}
+
 
 void loop() {
   String header;
@@ -57,6 +110,7 @@ void loop() {
     while(client.connected()){
       if(client.available()){
         char c = client.read();
+        
         header+=c;
         Serial.write(c);
         if(c == '\n'){
@@ -178,11 +232,37 @@ void loop() {
               client.print("Resolution: "); Serial.println(res);
               client.print("Duty Cycle: "); Serial.println(duty);
             }
-            else if(header.indexOf("GET /text/") >= 0){
-              unsigned short int pos_start = header.indexOf("/display="); // 
-              unsigned short int pos_end = header.indexOf("/end");
-              String text = header.substring(pos_start+9,pos_end);
-              text_display(text);
+            else if(header.indexOf("GET /Display/clear/tft"))
+            {
+                ucg.
+            }
+            else if(header.indexOf("GET /Display/word/format/")>=0)
+            {
+              unsigned short int pos_start = header.indexOf("/font=");
+              unsigned short int pos_end = header.indexOf("/animation=");
+              String font = header.substring(pos_start + 6,pos_end);
+              pos_start = pos_end;
+              pos_end = header.indexOf("/color_R=");
+              String animation = header.substring(pos_start+11,pos_end);
+              pos_start = pos_end;
+              pos_end = header.indexOf("/color_G="); 
+              String color_SR = header.substring(pos_start+8,pos_end);
+              pos_start = pos_end;
+              pos_end = header.indexOf("/color_B=");
+              String color_SG = header.substring(pos_start+8,pos_end);
+              pos_start = pos_end;
+              pos_end= header.indexOf("/alignment=");
+              String color_SB = header.substring(pos_start+8,pos_end);
+              pos_start = pos_end;
+              pos_end= header.indexOf("/string=");
+              String alignment = header.substring(pos_start+10,pos_end);
+              pos_start = pos_end;
+              pos_end =header.indexOf("/end");
+              String string = header.substring(pos_start+10,pos_end);
+              int color_R = color_SR.toInt();
+              int color_G = color_SG.toInt();
+              int color_B = color_SB.toInt();
+              display_word(font,animation,alignment,color_R,color_G,color_B,string);
             }
             else if(header.indexOf("GET /sensor/DHT11")>=0 )
             {
