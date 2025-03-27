@@ -303,6 +303,7 @@ save_playground.addEventListener("click", async function (e) {
     let form = playground_element.querySelector("form");
     let formData = new FormData(form);
     let obj = {};
+    obj["form_id"] = form.id;
     formData.forEach((value, key) => {
       obj[key] = value;
     });
@@ -355,15 +356,54 @@ async function validFilePath() {
 }
 load_playground.addEventListener("click", function (e) {
   e.preventDefault();
-  let playgroundDetails = {};
+
   validFilePath().then((validFile) => {
-    console.log("valid File found");
     fetch(validFile)
       .then((response) => response.json())
-      .then((data) => {
-        playgroundDetails = data;
+      .then((savedData) => {
+        savedData.forEach((jsonData) => {
+          let originalForm = document.getElementById(jsonData.form_id);
+          if (!originalForm) return; // Skip if form not found
+
+          // Clone form structure
+          let newForm = originalForm.cloneNode(true);
+          newForm.id = `${jsonData.form_id}_loaded`; // Unique ID for new form
+
+          // Map saved values into new form
+          Object.keys(jsonData).forEach((key) => {
+            if (key === "form_id") return;
+
+            let field = newForm.elements[key];
+            if (!field) return;
+
+            if (field.type === "radio") {
+              let radioToCheck = newForm.querySelector(
+                `input[type="radio"][name="${key}"][value="${jsonData[key]}"]`,
+              );
+              if (radioToCheck) radioToCheck.checked = true;
+            } else if (field.type === "checkbox") {
+              let values = Array.isArray(jsonData[key])
+                ? jsonData[key]
+                : [jsonData[key]];
+              values.forEach((val) => {
+                let checkbox = newForm.querySelector(
+                  `input[type="checkbox"][name="${key}"][value="${val}"]`,
+                );
+                if (checkbox) checkbox.checked = true;
+              });
+            } else if (field.tagName === "SELECT") {
+              field.value = jsonData[key]; // Keeps options, just selects one
+            } else {
+              field.value = jsonData[key]; // Updates text, email, etc.
+            }
+          });
+          let formWrapper = document.createElement("div");
+          formWrapper.classList.add("playground_element");
+          formWrapper.appendChild(newForm);
+
+          playground.appendChild(formWrapper);
+        });
       })
-      .catch((error) => console.error("error :", error));
+      .catch((error) => console.error("Error loading playground:", error));
   });
-  playgroundDetails = JSON.stringify(playgroundDetails, null, 2);
 });
