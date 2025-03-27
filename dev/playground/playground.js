@@ -492,7 +492,11 @@ load_playground.addEventListener("click", function (e) {
 
           // Clone form structure
           let newForm = originalForm.cloneNode(true);
+<<<<<<< HEAD
           newForm.id = ${jsonData.form_id}_loaded; // Unique ID for new form
+=======
+          newForm.id = `${jsonData.form_id}_loaded`; // Unique ID for new form
+>>>>>>> 463a9ede28a8917865c9db0789b4a62c27506a66
 
           // Map saved values into new form
           Object.keys(jsonData).forEach((key) => {
@@ -503,7 +507,11 @@ load_playground.addEventListener("click", function (e) {
 
             if (field.type === "radio") {
               let radioToCheck = newForm.querySelector(
+<<<<<<< HEAD
                 input[type="radio"][name="${key}"][value="${jsonData[key]}"],
+=======
+                `input[type="radio"][name="${key}"][value="${jsonData[key]}"]`,
+>>>>>>> 463a9ede28a8917865c9db0789b4a62c27506a66
               );
               if (radioToCheck) radioToCheck.checked = true;
             } else if (field.type === "checkbox") {
@@ -512,7 +520,11 @@ load_playground.addEventListener("click", function (e) {
                 : [jsonData[key]];
               values.forEach((val) => {
                 let checkbox = newForm.querySelector(
+<<<<<<< HEAD
                   input[type="checkbox"][name="${key}"][value="${val}"],
+=======
+                  `input[type="checkbox"][name="${key}"][value="${val}"]`,
+>>>>>>> 463a9ede28a8917865c9db0789b4a62c27506a66
                 );
                 if (checkbox) checkbox.checked = true;
               });
@@ -544,4 +556,8 @@ load_playground.addEventListener("click", function (e) {
       })
       .catch((error) => console.error("Error loading playground:", error));
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 463a9ede28a8917865c9db0789b4a62c27506a66
