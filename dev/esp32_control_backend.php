@@ -150,13 +150,67 @@ if (isset($_POST["dht11_data_pin"])) {
     curl_close($ch);
 }
 if (
-    isset($_POST["Text-display"]) &&
-    strcmp($_POST["Text-display"], "Null") != 0 ) {
+    isset($_POST["Display-word-format-font"]) &&
+    isset($_POST["Display-word-animation-type"]) &&
+    isset($_POST["Display-word-color-R"]) &&
+    isset($_POST["Display-word-color-G"]) &&
+    isset($_POST["Display-word-color-B"]) &&
+    isset($_POST["Display-word-alignment"]) &&
+    isset($_POST["Display-word-string"]) &&
+    strcmp($_POST["Display-word-string"], "null") != 0
+) {
+    // URL encode the string to handle special characters
+    $display_string = urlencode($_POST["Display-word-string"]);
+
     $c_url =
         $url .
-        "/text/display=" .
-        $_POST["Text-display"] .
+        "/Display/word/format/font=" .
+        $_POST["Display-word-format-font"] .
+        "/animation=" .
+        $_POST["Display-word-animation-type"] .
+        "/color_R=" .
+        $_POST["Display-word-color-R"] .
+        "/color_G=" .
+        $_POST["Display-word-color-G"] .
+        "/color_B=" .
+        $_POST["Display-word-color-B"] .
+        "/alignment=" .
+        $_POST["Display-word-alignment"] .
+        "/string=" .
+        $display_string .
         "/end";
+
+    $ch = curl_init($c_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
+
+    $response = curl_exec($ch);
+
+    // Add response output for debugging
+    if ($response !== false) {
+        echo "Display command sent successfully<br>";
+    } else {
+        echo "Error sending display command: " . curl_error($ch) . "<br>";
+    }
+
+    curl_close($ch);
+}
+if (isset($_POST["Display-clear"])) {
+    $c_url = $url . "/Display/clear=" . $_POST["Display-clear"] . "/end";
+    $ch = curl_init($c_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
+    $response = curl_exec($ch);
+    curl_close($ch);
+    echo $response;
+}
+if (
+    isset($_POST["Text-display"]) &&
+    strcmp($_POST["Text-display"], "Null") != 0
+) {
+    $c_url = $url . "/text/display=" . $_POST["Text-display"] . "/end";
     $ch = curl_init($c_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout

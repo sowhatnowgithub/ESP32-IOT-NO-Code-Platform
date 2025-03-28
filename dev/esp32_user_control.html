@@ -111,9 +111,6 @@
                         placeholder="ms"
                     />
                     <br />
-                    <label for="Text-display">text</label>
-                    <input type="text" name="Text-display" />
-                    <br />
                     <label for="analog-write-pin">PWM - PIN: </label>
                     <select name="analog-write-pin">
                         <option value="Null">Null</option>
@@ -173,6 +170,77 @@
 
                     <input type="submit" name="submit" value="Apply Settings" />
                 </fieldset>
+            </form>
+            <form action="esp32_control_backend.php" method="post">
+                <h3>TFT Display Control</h3>
+
+                <label for="Display-word-format-font">Font Size:</label>
+                <select
+                    name="Display-word-format-font"
+                    id="Display-word-format-font"
+                >
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option></select
+                ><br />
+
+                <label for="Display-word-animation-type">Animation:</label>
+                <select
+                    name="Display-word-animation-type"
+                    id="Display-word-animation-type"
+                >
+                    <option value="" selected>None</option>
+                    <option value="scrolling">Scroll</option>
+                    <option value="blinking">Blink</option></select
+                ><br />
+
+                <label for="Display-word-alignment">Alignment:</label>
+                <select
+                    name="Display-word-alignment"
+                    id="Display-word-alignment"
+                >
+                    <option value="middle">middle</option>
+                    <option value="center" selected>Center</option>
+                    <option value="right">Right</option></select
+                ><br />
+
+                <label>Text Color (RGB):</label><br />
+                <input
+                    type="range"
+                    name="Display-word-color-R"
+                    min="0"
+                    max="255"
+                    value="255"
+                />
+                <label>Red</label><br />
+                <input
+                    type="range"
+                    name="Display-word-color-G"
+                    min="0"
+                    max="255"
+                    value="255"
+                />
+                <label>Green</label><br />
+                <input
+                    type="range"
+                    name="Display-word-color-B"
+                    min="0"
+                    max="255"
+                    value="255"
+                />
+                <label>Blue</label><br />
+
+                <label for="Display-word-string">Text to Display:</label>
+                <input
+                    type="text"
+                    name="Display-word-string"
+                    id="Display-word-string"
+                    value="Hello World"
+                /><br />
+                <input type="submit" value="Update Display" />
+
+                <input type="radio" name="Display-clear" value="1" id="high" />
+                <label for="Display-clear">Clear Display</label>
             </form>
 
             <div class="footer">&copy; 2025 ESP32 No-Code Platform</div>
