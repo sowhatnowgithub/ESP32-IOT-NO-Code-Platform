@@ -80,8 +80,9 @@ This allows the client to connect and control the ESP32.
 
 ### 🗰 ESP32 as a Network Device
 
-To enable the ESP32 to be accessed over a **Local Area Network (LAN)**, use `esp32_php_server_start.php` in `wifiConnect`:
+To enable the ESP32 to be accessed over a **Local Area Network (LAN)**, i have created this in /wifiConnect folder `esp32_php_server_start.php` in `wifiConnect`:
 
+**Macusers don't have to do it manually, but windows users should either update this code according to there machine which is hosting the php server, or manually set up the server to use the product in LAN**
 ```php
 <?php
 if (isset($_POST["ip"]) == 1 && isset($_POST["wifi-set"]) == 1) {
