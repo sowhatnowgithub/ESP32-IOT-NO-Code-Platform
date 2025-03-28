@@ -30,6 +30,8 @@ This platform allows you to control your **ESP32**, manage **TFT Display**, inte
 - **Graphs for Sensor Readings** 📈 *(View real-time plots of data.)*
 - **WiFi Connection & Scanning** 📿 *(Switch between AP & Station mode.)*
 - **Minimal Power Testing Mode** 🥪 *(Test with limited features.)*
+- **Save and Load Playground**  *(You can save the state of your playground, this will save the blocks in the playground to a JSON file in webserver hosted directory and Load will read that JSON and dynamically appends the original structure of the blocks.So you can load ur projects later on)*
+
 
 ## 📞 ESP32 Setup
 
