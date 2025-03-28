@@ -161,7 +161,7 @@ if (
 ) {
     // URL encode the string to handle special characters
     $display_string = urlencode($_POST["Display-word-string"]);
-    
+
     $c_url =
         $url .
         "/Display/word/format/font=" .
@@ -179,24 +179,24 @@ if (
         "/string=" .
         $display_string .
         "/end";
-    
+
     $ch = curl_init($c_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
     curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
 
     $response = curl_exec($ch);
-    
+
     // Add response output for debugging
     if ($response !== false) {
         echo "Display command sent successfully<br>";
     } else {
         echo "Error sending display command: " . curl_error($ch) . "<br>";
     }
-    
+
     curl_close($ch);
 }
-if (isset($_POST["Display-clear"]) ){
+if (isset($_POST["Display-clear"])) {
     $c_url = $url . "/Display/clear=" . $_POST["Display-clear"] . "/end";
     $ch = curl_init($c_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
@@ -208,12 +208,9 @@ if (isset($_POST["Display-clear"]) ){
 }
 if (
     isset($_POST["Text-display"]) &&
-    strcmp($_POST["Text-display"], "Null") != 0 ) {
-    $c_url =
-        $url .
-        "/text/display=" .
-        $_POST["Text-display"] .
-        "/end";
+    strcmp($_POST["Text-display"], "Null") != 0
+) {
+    $c_url = $url . "/text/display=" . $_POST["Text-display"] . "/end";
     $ch = curl_init($c_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
