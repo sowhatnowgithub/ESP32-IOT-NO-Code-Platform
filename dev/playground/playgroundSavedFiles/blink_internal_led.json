@@ -1,1 +1,0 @@
-[{"variable_declaration":"a","variable_value":"1"},{"variable_declaration":"b","variable_value":"1"},{"for-loop":"10"},{"analog-write-pin":"2","analog-write-freq":"a","analog-write-res":"a","analog-write-duty":"180"},{"variable_zero":"a","variable_one":"a","operation":"add","variable_two":"b"},{"delay-seconds":"1000"},[],{"file_name":"blink_internal_led.json"}]

@@ -51,3 +51,15 @@ if (isset($_POST["dht11_data_pin"])) {
 
     curl_close($ch);
 }
+if (isset($_POST["mpu6500_variable_declaration"])) {
+    $c_url = $url . "/sensor/mpu6500" . "/end";
+    $ch = curl_init($c_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 second execution timeout
+
+    $response = curl_exec($ch);
+    echo $response;
+
+    curl_close($ch);
+}

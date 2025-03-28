@@ -1,0 +1,1 @@
+[{"form_id":"form_loop","for-loop":"10"},{"form_id":"form_dht11","dht11_data_pin":"5","temp_variable_name":"t","humid_variable_name":"h"},{"form_id":"form_end"},{"file_name":"plot_temp.json"}]
