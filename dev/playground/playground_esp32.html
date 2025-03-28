@@ -11,6 +11,90 @@
             href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;700&display=swap"
             rel="stylesheet"
         />
+        <script
+            src="https://kit.fontawesome.com/a076d05399.js"
+            crossorigin="anonymous"
+        ></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <script
+            src="https://kit.fontawesome.com/a076d05399.js"
+            crossorigin="anonymous"
+        ></script>
+        <style>
+            .hidden {
+                display: none;
+            }
+            .graph-button {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                padding: 8px 12px;
+                border: none;
+                background-color: #4caf50;
+                color: white;
+                cursor: pointer;
+                border-radius: 5px;
+                transition: background 0.3s;
+            }
+            .graph-button:hover {
+                background-color: #45a049;
+            }
+            .popup-container {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: grey;
+                padding: 15px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
+                z-index: 1000;
+                width: 95%;
+                max-height: 95%;
+                overflow-y: auto;
+                display: none;
+            }
+            .popup-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 5px;
+                margin-bottom: 5px;
+            }
+            .close-popup {
+                background: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+            }
+            .floating-icon {
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                background: #4caf50;
+                color: white;
+                padding: 10px;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 18px;
+                z-index: 1001;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            }
+            .graph-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+            .graph-container canvas {
+                flex: 1 1 45%; /* Allows two canvases per row */
+                max-width: 28%;
+                height: auto;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -30,6 +114,10 @@
                 <button class="load_playground">
                     <a>Load Playground</a>
                 </button>
+                <div id="graphIcon" class="floating-icon">
+                    <i class="fas fa-chart-line">Graph</i>
+                </div>
+
                 <div class="element" draggable="true">
                     <form class="function variable" id="form_variable">
                         <label for="variable_declaration">Variable Name:</label>
@@ -92,6 +180,30 @@
                             executed)</label
                         >
                         <input type="number" name="then" />
+                    </form>
+                </div>
+                <div class="element" draggable="true">
+                    <form
+                        action="playground_control_backend_read.php"
+                        method="post"
+                        class="read_from_esp32 mpu6500"
+                        id="form_mpu6500"
+                    >
+                        Read Sensor From MPU6500<br />
+                        <div class="text_small">
+                            Connect - 21pin(esp32) - SDA/SDI <br />Connect -
+                            23pin(esp32)<br />
+                            - SCL/SCLK <br />Connect - 3.3V - Vcc<br />
+                            Connect - GND - GND
+                        </div>
+
+                        <label for="mpu6500_variable_declaration"
+                            >Enter Variable Name:</label
+                        >
+                        <input
+                            type="text"
+                            name="mpu6500_variable_declaration"
+                        />
                     </form>
                 </div>
                 <div class="element" draggable="true">
@@ -323,9 +435,77 @@
                 <button class="btn submit-playground">Submit-Playground</button>
             </div>
         </div>
-        <canvas id="temp_pointchart" width="400" height="400"></canvas>
-        <canvas id="humid_pointchart" width="400" height="400"></canvas>
 
+        <div id="graphIcon" class="floating-icon">
+            <i class="fas fa-chart-line"></i>
+        </div>
+
+        <!-- Graph Popup -->
+        <div id="graph-popup" class="popup-container">
+            <div class="popup-header">
+                <h2>Sensor Graphs</h2>
+                <button id="closeGraphPopup" class="close-popup">
+                    &times;
+                </button>
+            </div>
+            <div class="graph-container">
+                <canvas id="temp_pointchart" width="350" height="250"></canvas>
+                <canvas id="humid_pointchart" width="350" height="250"></canvas>
+                <canvas
+                    id="acce_x_pointchart"
+                    width="350"
+                    height="250"
+                ></canvas>
+                <canvas
+                    id="acce_y_pointchart"
+                    width="350"
+                    height="250"
+                ></canvas>
+                <canvas
+                    id="acce_z_pointchart"
+                    width="350"
+                    height="250"
+                ></canvas>
+                <canvas
+                    id="gyro_x_pointchart"
+                    width="350"
+                    height="250"
+                ></canvas>
+                <canvas
+                    id="gyro_y_pointchart"
+                    width="350"
+                    height="250"
+                ></canvas>
+                <canvas
+                    id="gyro_z_pointchart"
+                    width="350"
+                    height="250"
+                ></canvas>
+                <canvas id="yam_pointchart" width="350" height="250"></canvas>
+                <canvas id="pitch_pointchart" width="350" height="250"></canvas>
+                <canvas id="roll_pointchart" width="350" height="250"></canvas>
+            </div>
+        </div>
+
+        <script>
+            document
+                .getElementById("graphIcon")
+                .addEventListener("click", function () {
+                    var popup = document.getElementById("graph-popup");
+                    if (popup.style.display === "block") {
+                        popup.style.display = "none";
+                    } else {
+                        popup.style.display = "block";
+                    }
+                });
+
+            document
+                .getElementById("closeGraphPopup")
+                .addEventListener("click", function () {
+                    document.getElementById("graph-popup").style.display =
+                        "none";
+                });
+        </script>
         <script src="playground.js" defer></script>
     </body>
 </html>
