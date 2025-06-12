@@ -175,6 +175,13 @@ Here are the amazing people who have contributed to this project:
 | [Korak]  | [DHT sensor, MPU6500 features and helped in ploting of graphs of sensor data]      |
 | [Puneeth]  | [Helped in debugging the esp32 code and hardware support]      |
 
+# IOT No-Code Dashboard For ESP32
+
+## License
+
+This project’s source code is licensed under the GNU General Public License v3.0 (GPLv3).
+
+**Note:** Some graphical assets (such as graphs created with Canva) are not covered under the GPL and are subject to Canva's own terms.
 
 
 
